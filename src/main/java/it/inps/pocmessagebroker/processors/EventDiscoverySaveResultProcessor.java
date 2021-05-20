@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @Component
 @Slf4j
@@ -28,22 +29,29 @@ public class EventDiscoverySaveResultProcessor implements Processor {
     public void process(Exchange exchange) {
         var eventiArca = (Map<Applicazione, List<EventoArca>>)exchange.getProperties().get("events");
 
-        log.info("trovate {} applicazioni con chiavi arca");
-
+        log.info("* EVENTI ARCA - SALVATAGGIO NUOVI EVENTI SU TABELLA DI CONTROLLO");
+        var salvati = new AtomicInteger(0);
+        var scartati = new AtomicInteger(0);
         eventiArca.keySet()
                 .forEach(applicazione -> {
-                    log.info("processo eventi per applicazione : {}", applicazione);
+                    log.info("     processo eventi per applicazione : {}", applicazione);
                     var eventi = eventiArca.get(applicazione);
                     eventi.forEach(eventoArca -> {
-                        EventoArcaPending eventoArcaPending = new EventoArcaPending();
-                        eventoArcaPending.setIdApplicazione(applicazione.getId());
-                        eventoArcaPending.setArcaKey(eventoArca.getChiaveArca());
-                        eventoArcaPending.setStato(0);
-                        this.eventoArcaPendingRepository.save(eventoArcaPending);
-                        log.info("salvato {}", eventoArcaPending);
+
+                        if (!this.eventoArcaPendingRepository.findTopByArcaKey(eventoArca.getChiaveArca()).isPresent()) {
+                            EventoArcaPending eventoArcaPending = new EventoArcaPending();
+                            eventoArcaPending.setIdApplicazione(applicazione.getId());
+                            eventoArcaPending.setArcaKey(eventoArca.getChiaveArca());
+                            eventoArcaPending.setStato(0);
+                            this.eventoArcaPendingRepository.save(eventoArcaPending);
+                            salvati.incrementAndGet();
+                        }
+                        else
+                            scartati.incrementAndGet();
                     });
                 });
 
-        exchange.getIn().setBody(""+eventiArca.size());
+        log.info("          salvati {} nuovi eventi", salvati.get());
+        log.info("          scartati {} eventi poichè già presente come chiave", scartati.get());
     }
 }

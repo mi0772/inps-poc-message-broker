@@ -33,14 +33,17 @@ public class EventDiscoveryProcessor implements Processor {
 
     @Override
     public void process(Exchange exchange) {
-        log.info("ws url endpoint for discovery found: {}", this.config.getWsEndpoint());
+        log.info("======================================================================");
+        log.info("* EVENTI ARCA - INTERROGAZIONE WS");
         Map<Applicazione, List<EventoArca>> result = new HashMap<>(2000);
 
         this.applicationeRepository.findAll()
                 .forEach(applicazione -> {
-                    log.info("{}", applicazione);
-                    result.put(applicazione, this.arcaNotificaEventiWSClient.getCustomerInfo(this.config.getWsEndpoint(), applicazione));
+                    var nuoviEventi = this.arcaNotificaEventiWSClient.getCustomerInfo(this.config.getWsEndpoint(), applicazione);
+                    result.put(applicazione, nuoviEventi);
+                    log.info("     nuovi eventi per applicazione {} : {}", applicazione, nuoviEventi.size());
                 });
+
 
         exchange.setProperty("events", result);
     }

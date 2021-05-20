@@ -4,11 +4,12 @@ import lombok.Builder;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Data
 @Entity
 @Table(name = "applicazioni")
-public class Applicazione {
+public class Applicazione implements Serializable {
     @Id @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
 
@@ -29,17 +30,4 @@ public class Applicazione {
 
     @Column(name = "progetto")
     private String progetto;
-
-    @Override
-    public String toString() {
-        return "Applicazione{" +
-                "id=" + id +
-                ", appName='" + appName + '\'' +
-                ", appKey='" + appKey + '\'' +
-                ", userId='" + userId + '\'' +
-                ", identityProvvider='" + identityProvvider + '\'' +
-                ", codiceArchivio='" + codiceArchivio + '\'' +
-                ", progetto='" + progetto + '\'' +
-                '}';
-    }
 }
