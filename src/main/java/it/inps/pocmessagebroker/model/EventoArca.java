@@ -42,6 +42,10 @@ public class EventoArca {
     private String PROFILO;
     private String RETURNCODE;
 
+    public String getChiaveArca() {
+        return String.format("%s%08d", this.getCFCCC1_EV0(), Integer.parseInt(this.getPROGR_EV0()));
+    }
+
     public static List<EventoArca> getFromWSResponse(String rawResponse) {
         var response = new ArrayList<EventoArca>(1000);
 

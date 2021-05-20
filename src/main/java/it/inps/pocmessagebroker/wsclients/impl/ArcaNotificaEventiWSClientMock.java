@@ -1,5 +1,6 @@
 package it.inps.pocmessagebroker.wsclients.impl;
 
+import it.inps.pocmessagebroker.model.Applicazione;
 import it.inps.pocmessagebroker.model.EventoArca;
 import it.inps.pocmessagebroker.wsclients.ArcaNotificaEventiWSClient;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,7 @@ public class ArcaNotificaEventiWSClientMock implements ArcaNotificaEventiWSClien
 
     }
 
-    public List<EventoArca> getCustomerInfo(String webServiceEndpoint) {
+    public List<EventoArca> getCustomerInfo(String webServiceEndpoint, Applicazione applicazione) {
         try {
             File file = ResourceUtils.getFile("classpath:discovery_response.xml");
             String requestString = new String(Files.readAllBytes(file.toPath()));

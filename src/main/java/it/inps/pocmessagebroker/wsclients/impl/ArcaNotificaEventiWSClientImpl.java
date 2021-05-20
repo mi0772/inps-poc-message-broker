@@ -1,5 +1,6 @@
 package it.inps.pocmessagebroker.wsclients.impl;
 
+import it.inps.pocmessagebroker.model.Applicazione;
 import it.inps.pocmessagebroker.model.EventoArca;
 import it.inps.pocmessagebroker.wsclients.ArcaNotificaEventiWSClient;
 import lombok.extern.slf4j.Slf4j;
@@ -27,14 +28,21 @@ public class ArcaNotificaEventiWSClientImpl implements ArcaNotificaEventiWSClien
         this.restTemplate = restTemplate;
     }
 
-    public List<EventoArca> getCustomerInfo(String webServiceEndpoint) {
+    public List<EventoArca> getCustomerInfo(String webServiceEndpoint, Applicazione applicazione) {
 
         try {
             HttpHeaders headers = new HttpHeaders();
             headers.add("Content-Type", "text/xml");
             File file = ResourceUtils.getFile("classpath:notifica_eventi_soap_request.xml");
             String requestString = new String(Files.readAllBytes(file.toPath()));
-            HttpEntity<String> request = new HttpEntity<>(String.format(requestString,"WA00405","WA00405","WA00405","AD", "1101", "A"), headers);
+            HttpEntity<String> request = new HttpEntity<>(String.format(
+                    requestString,
+                    applicazione.getAppName(),
+                    applicazione.getAppKey(),
+                    applicazione.getUserId(),
+                    applicazione.getIdentityProvvider(),
+                    applicazione.getCodiceArchivio(),
+                    applicazione.getProgetto()), headers);
 
             String result = restTemplate.postForObject(webServiceEndpoint, request, String.class);
             if (!result.contains("<SOAP-ENV:Fault>")) {
