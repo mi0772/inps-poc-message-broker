@@ -3,11 +3,16 @@ package it.inps.pocmessagebroker.wsclients;
 import it.inps.pocmessagebroker.model.ArcaEvent;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
+import org.springframework.util.ResourceUtils;
 import org.springframework.web.client.RestTemplate;
 
+import javax.annotation.Resource;
+import java.io.File;
+import java.nio.file.Files;
 import java.util.List;
 
 @Component
@@ -52,10 +57,13 @@ public class ArcaNotificaEventiWSClient {
             HttpHeaders headers = new HttpHeaders();
             headers.add("Content-Type", "text/xml");
 
-            HttpEntity<String> request = new HttpEntity<>(String.format(REQ_GET_INFO, "1101", "A"), headers);
+            File file = ResourceUtils.getFile("classpath:notifica_eventi_soap_request.xml");
+            String requestString = new String(Files.readAllBytes(file.toPath()));
+
+            HttpEntity<String> request = new HttpEntity<>(String.format(requestString,"WA00405","WA00405","WA00405","AD", "1101", "A"), headers);
 
             String result = restTemplate.postForObject(webServiceEndpoint, request, String.class);
-
+            log.info("result: {}", result);
             if (!result.contains("<SOAP-ENV:Fault>")) {
                 // Do SOAP Envelope body parsing here
             }
