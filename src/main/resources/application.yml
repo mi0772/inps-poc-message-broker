@@ -1,0 +1,50 @@
+routes:
+  event-discovery:
+    interval: 5000
+    wsEndpoint: https://ws.svil.inps/host/ArcaNotificaEventiWS
+  event-details:
+    version: 1
+  event-finalizer:
+    version: 1
+
+camel:
+  springboot:
+    main-run-controller: true
+    tracing: false
+    backlog-tracing: false
+    use-breadcrumb: false
+
+management:
+  server:
+    port: 8912
+  endpoints:
+    web:
+      exposure:
+        include:
+          - "*"
+          - jolokia
+
+server:
+  port: 8080
+
+
+spring:
+  jmx:
+    enabled: true
+  profiles:
+    active: dev
+  artemis:
+    mode: native
+    host: localhost
+    port: 61616
+    user: admin
+    password: admin
+
+jms:
+  queue:
+    destination: demoQueue
+
+
+logging:
+  level:
+    org.springframework.web: DEBUG
