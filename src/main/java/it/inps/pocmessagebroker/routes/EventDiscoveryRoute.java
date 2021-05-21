@@ -39,7 +39,7 @@ public class EventDiscoveryRoute extends RouteBuilder {
                 .process(this.eventDiscoverySendResultProcessor)
                 .split(body())
                 //.parallelProcessing()
-                .to("jms:queue:EVENTS_PENDING")
+                .to("jms:queue:" + this.config.getOutputQueueName())
                 .process(this.eventDiscoveryMarkSentProcessor)
 
         ;

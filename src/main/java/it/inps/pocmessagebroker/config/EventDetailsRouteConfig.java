@@ -10,5 +10,5 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @ConfigurationProperties(prefix = "routes.event-details")
 public class EventDetailsRouteConfig {
-    private Integer version;
+    private String inputQueueName;
 }

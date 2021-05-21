@@ -2,8 +2,9 @@ routes:
   event-discovery:
     interval: 50000
     wsEndpoint: https://ws.svil.inps/host/ArcaNotificaEventiWS
+    outputQueueName: EVENTS_PENDING
   event-details:
-    version: 1
+    inputQueueName: EVENTS_PENDING
   event-finalizer:
     version: 1
 
@@ -40,12 +41,12 @@ spring:
     user: admin
     password: admin
   datasource:
-    url: jdbc:h2:mem:broker-db
-    driverClassName: org.h2.Driver
-    username: sa
+    url: jdbc:mysql://localhost:3306/db
+    driverClassName: com.mysql.jdbc.Driver
+    username: user
     password: password
   jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
+    database-platform: org.hibernate.dialect.MySQLDialect
     show-sql: false
 
 jms:
