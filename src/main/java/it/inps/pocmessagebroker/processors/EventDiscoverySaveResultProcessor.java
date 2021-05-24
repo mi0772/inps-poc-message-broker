@@ -1,6 +1,6 @@
 package it.inps.pocmessagebroker.processors;
 
-import it.inps.pocmessagebroker.model.Applicazione;
+import it.inps.pocmessagebroker.domain.Applicazione;
 import it.inps.pocmessagebroker.model.EventoArca;
 import it.inps.pocmessagebroker.model.EventoArcaPending;
 import it.inps.pocmessagebroker.repository.EventoArcaPendingRepository;

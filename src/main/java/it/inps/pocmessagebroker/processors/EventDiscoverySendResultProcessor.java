@@ -1,7 +1,5 @@
 package it.inps.pocmessagebroker.processors;
 
-import it.inps.pocmessagebroker.model.Applicazione;
-import it.inps.pocmessagebroker.model.EventoArca;
 import it.inps.pocmessagebroker.model.EventoArcaPendingMessage;
 import it.inps.pocmessagebroker.repository.ApplicationeRepository;
 import it.inps.pocmessagebroker.repository.EventoArcaPendingRepository;
@@ -12,8 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @Component

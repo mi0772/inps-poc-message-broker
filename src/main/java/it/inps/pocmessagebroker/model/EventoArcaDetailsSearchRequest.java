@@ -1,5 +1,6 @@
 package it.inps.pocmessagebroker.model;
 
+import it.inps.pocmessagebroker.domain.Applicazione;
 import lombok.Builder;
 import lombok.Getter;
 

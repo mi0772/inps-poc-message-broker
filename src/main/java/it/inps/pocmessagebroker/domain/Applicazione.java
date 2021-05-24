@@ -1,4 +1,4 @@
-package it.inps.pocmessagebroker.model;
+package it.inps.pocmessagebroker.domain;
 
 import lombok.Builder;
 import lombok.Data;

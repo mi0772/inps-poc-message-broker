@@ -1,7 +1,8 @@
 package it.inps.pocmessagebroker.processors;
 
 import it.inps.pocmessagebroker.config.EventDiscoveryRouteConfig;
-import it.inps.pocmessagebroker.model.Applicazione;
+
+import it.inps.pocmessagebroker.domain.Applicazione;
 import it.inps.pocmessagebroker.model.EventoArca;
 import it.inps.pocmessagebroker.repository.ApplicationeRepository;
 import it.inps.pocmessagebroker.wsclients.ArcaNotificaEventiWSClient;
