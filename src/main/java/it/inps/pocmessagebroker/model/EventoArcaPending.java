@@ -23,6 +23,9 @@ public class EventoArcaPending {
     @Column(name = "stato")
     private Integer stato;
 
+    @Column(name = "xml")
+    private String xml;
+
     @Override
     public String toString() {
         return "EventoArcaPending{" +
@@ -30,6 +33,7 @@ public class EventoArcaPending {
                 ", idApplicazione=" + idApplicazione +
                 ", arcaKey='" + arcaKey + '\'' +
                 ", stato=" + stato +
+                ", xml=" + xml +
                 '}';
     }
 }

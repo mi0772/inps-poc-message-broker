@@ -30,4 +30,7 @@ public class Applicazione implements Serializable {
 
     @Column(name = "progetto")
     private String progetto;
+
+    @Column(name = "queue")
+    private String queue;
 }

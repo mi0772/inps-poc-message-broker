@@ -10,5 +10,6 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @ConfigurationProperties(prefix = "routes.event-finalizer")
 public class EventTransactionFinalizerRouteConfig {
-    private Integer version;
+    private String interval;
+    private String wsEndpoint;
 }

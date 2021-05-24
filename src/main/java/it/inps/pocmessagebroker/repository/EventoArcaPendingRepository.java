@@ -11,5 +11,6 @@ public interface EventoArcaPendingRepository extends JpaRepository<EventoArcaPen
 
     Optional<EventoArcaPending> findTopByArcaKey(@Param("key") String key);
     List<EventoArcaPending> findAllByStatoIs(@Param("stato") Integer stato);
+    List<EventoArcaPending> findAllByStatoIsAndIdApplicazione(@Param("stato") Integer stato, @Param("idApplicazione") Long idApplicazione);
     Optional<EventoArcaPending> findByArcaKeyAndIdApplicazione(@Param("arcaKey") String arcaKey, @Param("idApplicazione") Long idApplicazione);
 }

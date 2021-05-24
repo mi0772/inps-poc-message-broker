@@ -16,6 +16,7 @@
                 </parametriApplicazione>
                 <listaEventi>
                     <eventiArca>
+                        %s
                     </eventiArca>
                 </listaEventi>
             </notificaEventiRequest>

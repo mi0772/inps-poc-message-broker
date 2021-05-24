@@ -42,6 +42,7 @@ public class EventDiscoverySaveResultProcessor implements Processor {
                             EventoArcaPending eventoArcaPending = new EventoArcaPending();
                             eventoArcaPending.setIdApplicazione(applicazione.getId());
                             eventoArcaPending.setArcaKey(eventoArca.getChiaveArca());
+                            eventoArcaPending.setXml(eventoArca.getXml());
                             eventoArcaPending.setStato(0);
                             this.eventoArcaPendingRepository.save(eventoArcaPending);
                             salvati.incrementAndGet();

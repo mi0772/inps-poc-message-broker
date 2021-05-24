@@ -11,7 +11,6 @@ import org.apache.camel.Processor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -39,7 +38,7 @@ public class EventDiscoveryProcessor implements Processor {
 
         this.applicationeRepository.findAll()
                 .forEach(applicazione -> {
-                    var nuoviEventi = this.arcaNotificaEventiWSClient.getCustomerInfo(this.config.getWsEndpoint(), applicazione);
+                    var nuoviEventi = this.arcaNotificaEventiWSClient.getEventi(this.config.getWsEndpoint(), applicazione);
                     result.put(applicazione, nuoviEventi);
                     log.info("     nuovi eventi per applicazione {} : {}", applicazione, nuoviEventi.size());
                 });

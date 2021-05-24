@@ -13,12 +13,13 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.ByteArrayInputStream;
-import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
+
+import static it.inps.pocmessagebroker.utils.XMLUtils.getTagValueFromName;
+import static it.inps.pocmessagebroker.utils.XMLUtils.nodeToString;
 
 @Data
 @ToString(callSuper = false)
@@ -41,6 +42,7 @@ public class EventoArca {
     private String ARKHTRAN_EV0;
     private String PROFILO;
     private String RETURNCODE;
+    private String xml;
 
     public String getChiaveArca() {
         return String.format("%s%08d", this.getCFCCC1_EV0(), Integer.parseInt(this.getPROGR_EV0()));
@@ -83,7 +85,7 @@ public class EventoArca {
                     r.setARKHTRAN_EV0   (getTagValueFromName(element, "ARKHTRAN_EV0").orElse(""));
                     r.setPROFILO        (getTagValueFromName(element, "PROFILO").orElse(""));
                     r.setRETURNCODE     (getTagValueFromName(element, "RETURNCODE").orElse(""));
-
+                    r.setXml(nodeToString(node));
                     response.add(r);
                 }
             }
@@ -95,13 +97,5 @@ public class EventoArca {
         return response;
     }
 
-    private static Optional<String> getTagValueFromName(Element e, String tagName) {
-        NodeList nodeList = e.getElementsByTagName(tagName);
-        for (int i=0;i<nodeList.getLength(); i++) {
-            Node x = nodeList.item(i);
-            if (nodeList.item(i).getFirstChild() != null)
-                return Optional.ofNullable(nodeList.item(i).getFirstChild().getNodeValue());
-        }
-        return Optional.empty();
-    }
+
 }

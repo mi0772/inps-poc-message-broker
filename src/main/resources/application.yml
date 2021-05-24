@@ -6,7 +6,8 @@ routes:
   event-details:
     inputQueueName: EVENTS_PENDING
   event-finalizer:
-    version: 1
+    interval: 5000
+    wsEndpoint: https://ws.svil.inps/host/ArcaNotificaEventiWS
 
 camel:
   springboot:
