@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 
 import javax.xml.bind.JAXBException;
 import java.io.IOException;
+import java.util.concurrent.atomic.AtomicInteger;
 
 
 @Component
@@ -32,32 +33,32 @@ public class EventTransactionFinalizerProcessor implements Processor {
     @Override
     public void process(Exchange exchange) throws Exception {
 
-        log.info("======================================================================");
-        log.info("* EVENTI ARCA - INVIO A WS EVENTI COMPLETATI");
-
+        log.info("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - ");
+        log.info("fase 3/3 : invio conferma al WS Arca per gli eventi completati");
+        var inviati = new AtomicInteger(0);
         this.applicazioneRepository.findAll()
                 .forEach(applicazione -> {
-                    log.info("    Applicazione : {}", applicazione.getAppName());
-
                     try {
                         var elencoMessaggiCompleti = this.eventoArcaPendingRepository.findAllByStatoIsAndIdApplicazione(2, applicazione.getId());
+                        log.info("{}: messaggi completati da inviare : {}", applicazione.getAppName(), elencoMessaggiCompleti.size());
                         elencoMessaggiCompleti.forEach(messaggio -> {
                             messaggio.setXml(messaggio.getXml().replace("<RETURNCODE/>","<RETURNCODE>OK</RETURNCODE>"));
                         });
-
+                        log.info("{}: esecuzione chiamata al ws in corso ...", applicazione.getAppName());
                         this.arcaNotificaEventiWSClient.finalizeEvento(this.config.getWsEndpoint(), elencoMessaggiCompleti, applicazione);
+                        log.info("{}: esecuzione chiamata al ws completata", applicazione.getAppName());
 
-                        log.info("      RICHIESTA WS ESEGUITA CON SUCCESSO");
-
+                        log.info("{}: salvataggio stato eventi come completato in corso ...", applicazione.getAppName());
                         elencoMessaggiCompleti.forEach(x -> x.setStato(100));
                         this.eventoArcaPendingRepository.saveAll(elencoMessaggiCompleti);
+                        log.info("{}: salvataggio stato eventi come completato eseguita con successo", applicazione.getAppName());
 
-                        log.info("      RIMOSSI {} MESSAGGI DAL PROCESSO", elencoMessaggiCompleti.size());
+                        inviati.addAndGet(elencoMessaggiCompleti.size());
 
                     } catch (IOException | JAXBException e) {
                         e.printStackTrace();
                     }
-
+                    log.info("totale eventi segnati come comletato: {}", inviati.get());
                 });
 
 

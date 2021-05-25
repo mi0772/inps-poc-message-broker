@@ -14,14 +14,12 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class EventDiscoveryRoute extends RouteBuilder {
 
-    private final EventDiscoveryRouteConfig config;
     private final EventDiscoveryProcessor discoveryProcessor;
     private final EventDiscoverySaveResultProcessor eventDiscoverySaveResultProcessor;
 
     @Autowired
     public EventDiscoveryRoute(CamelContext context, EventDiscoveryRouteConfig config, EventDiscoveryProcessor discoveryProcessor, EventDiscoverySaveResultProcessor eventDiscoverySaveResultProcessor) {
         super(context);
-        this.config = config;
         this.discoveryProcessor = discoveryProcessor;
         this.eventDiscoverySaveResultProcessor = eventDiscoverySaveResultProcessor;
     }
@@ -31,7 +29,7 @@ public class EventDiscoveryRoute extends RouteBuilder {
         from("timer://manualRestart?repeatCount=1").onCompletion().process(new Processor() {
             @Override
             public void process(Exchange exchange) throws Exception {
-                log.info("FINE");
+                log.info("elaborazione terminata");
             }
         }).end()
                 .process(this.discoveryProcessor)

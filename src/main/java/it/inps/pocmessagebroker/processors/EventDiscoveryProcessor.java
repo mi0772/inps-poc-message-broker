@@ -33,15 +33,17 @@ public class EventDiscoveryProcessor implements Processor {
 
     @Override
     public void process(Exchange exchange) {
-        log.info("======================================================================");
-        log.info("* EVENTI ARCA - INTERROGAZIONE WS");
         Map<Applicazione, List<EventoArca>> result = new HashMap<>(2000);
+
+        log.info("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - ");
+        log.info("fase 1/3 : lettura dei nuovi eventi da ARCA");
 
         this.applicazioneRepository.findAll()
                 .forEach(applicazione -> {
+                    log.info("{}: interrogazione WS in corso ...", applicazione.getAppName());
                     var nuoviEventi = this.arcaNotificaEventiWSClient.getEventi(this.config.getWsEndpoint(), applicazione);
                     result.put(applicazione, nuoviEventi);
-                    log.info("     nuovi eventi per applicazione {} : {}", applicazione, nuoviEventi.size());
+                    log.info("{}: il servizio ha restituito nr: {} eventi", applicazione.getAppName(), nuoviEventi.size());
                 });
 
 

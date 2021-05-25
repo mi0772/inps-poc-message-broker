@@ -27,9 +27,7 @@ public class EventDetailsSetStatoProcessor implements Processor {
     @Override
     public void process(Exchange exchange) throws Exception {
 
-        //INVIARE QUESTO COME DESTINAZIONE, per il momento viene inviato come STRING sulla coda destinazione
         var eventoDetails = (EventoArcaDetails)exchange.getProperty("eventoDetails");
-
 
         var eventoPending = new Gson().fromJson(exchange.getIn().getBody().toString(), EventoArcaPendingMessage.class);
         var ev = this.eventoArcaPendingRepository.findByArcaKeyAndIdApplicazione(eventoPending.getArcaKey(), eventoPending.getApplicazione().getId()).orElseThrow(RuntimeException::new);

@@ -29,12 +29,16 @@ public class EventDiscoverySaveResultProcessor implements Processor {
     public void process(Exchange exchange) {
         var eventiArca = (Map<Applicazione, List<EventoArca>>)exchange.getProperties().get("events");
 
-        log.info("* EVENTI ARCA - SALVATAGGIO NUOVI EVENTI SU TABELLA DI CONTROLLO");
+        log.info("salvataggio lista eventi su database");
+
         var salvati = new AtomicInteger(0);
         var scartati = new AtomicInteger(0);
+
         eventiArca.keySet()
                 .forEach(applicazione -> {
-                    log.info("     processo eventi per applicazione : {}", applicazione);
+                    AtomicInteger tSalvati = new AtomicInteger();
+                    AtomicInteger tScartati = new AtomicInteger();
+                    log.info("{}: controllo gli eventi ricevuti per l'applicazione", applicazione.getAppName());
                     var eventi = eventiArca.get(applicazione);
                     eventi.forEach(eventoArca -> {
 
@@ -46,13 +50,19 @@ public class EventDiscoverySaveResultProcessor implements Processor {
                             eventoArcaPending.setStato(0);
                             this.eventoArcaPendingRepository.save(eventoArcaPending);
                             salvati.incrementAndGet();
+                            tSalvati.getAndIncrement();
                         }
-                        else
+                        else {
                             scartati.incrementAndGet();
+                            tScartati.getAndIncrement();
+                        }
                     });
+
+                    log.info("{}: {} nuovi eventi registrati", applicazione.getAppName(), tSalvati.get());
+                    log.info("{}: {} nuovi eventi ignorati poichè già registrati in precedenza", applicazione.getAppName(), tScartati.get());
                 });
 
-        log.info("          salvati {} nuovi eventi", salvati.get());
-        log.info("          scartati {} eventi poichè già presente come chiave", scartati.get());
+        log.info("totale nuovi eventi registrati: {}",salvati.get());
+        log.info("totale nuovi eventi ignorati poichè già registrati in precedenza : {}", scartati.get());
     }
 }

@@ -10,7 +10,5 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @ConfigurationProperties(prefix = "routes.event-discovery")
 public class EventDiscoveryRouteConfig {
-    private Integer interval;
     private String wsEndpoint;
-    private String outputQueueName;
 }

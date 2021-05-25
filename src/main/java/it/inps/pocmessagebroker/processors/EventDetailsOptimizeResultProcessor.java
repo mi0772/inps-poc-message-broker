@@ -25,20 +25,21 @@ public class EventDetailsOptimizeResultProcessor implements Processor {
 
     @Override
     public void process(Exchange exchange) throws Exception {
-        List<EventoArcaPending> elencoEventi = eventoArcaPendingRepository.findAllByStatoIs(0);
-        log.info("trovati {} eventi da processare in dettaglio", elencoEventi.size());
+        log.info("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - ");
+        log.info("fase 2/3 : richiesta dettaglio eventi");
 
-        log.info("ottimizzazione delle chiamate in corso");
+        List<EventoArcaPending> elencoEventi = eventoArcaPendingRepository.findAllByStatoIs(0);
+        log.info("ci sono {} eventi da processare in dettaglio", elencoEventi.size());
+
+        log.info("analisi elenco eventi per ottimizzazione delle chiamate ...");
         Map<EventoArcaPending, List<Long>> res = new HashMap<>();
 
         var v = elencoEventi.stream().collect(Collectors.toMap(EventoArcaPending::getArcaKey, p -> p, (p, q) -> p)).values();
-        v.forEach(eventoArcaPending -> {
-            res.put(eventoArcaPending, elencoEventi.stream().filter(x -> x.getArcaKey().equals(eventoArcaPending.getArcaKey())).map(EventoArcaPending::getIdApplicazione).collect(Collectors.toList()));
-        });
-        log.info("ottimizzazione completata, verranno eseguite {} chiamate al WS di dettaglio", res.values().size());
+        v.forEach(eventoArcaPending -> res.put(eventoArcaPending, elencoEventi.stream().filter(x -> x.getArcaKey().equals(eventoArcaPending.getArcaKey())).map(EventoArcaPending::getIdApplicazione).collect(Collectors.toList())));
 
+        log.info("ottimizzazione completata, verranno eseguite {} chiamate al WS di dettaglio invece di {}", res.values().size(), elencoEventi.size());
+
+        log.info("invio dei risultati alle relative code, l'invio avverrà in modalità multithread, abilitare il log in debug per visualizzare il dettaglio");
         exchange.getIn().setBody(res);
-        //ora prendi questo nel successivo processor ed invoca il ws di dettaglio
-
     }
 }
