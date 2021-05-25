@@ -2,7 +2,7 @@ package it.inps.pocmessagebroker.processors;
 
 import it.inps.pocmessagebroker.domain.Applicazione;
 import it.inps.pocmessagebroker.model.EventoArca;
-import it.inps.pocmessagebroker.model.EventoArcaPending;
+import it.inps.pocmessagebroker.domain.EventoArcaPending;
 import it.inps.pocmessagebroker.repository.EventoArcaPendingRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.camel.Exchange;
@@ -38,7 +38,7 @@ public class EventDiscoverySaveResultProcessor implements Processor {
                     var eventi = eventiArca.get(applicazione);
                     eventi.forEach(eventoArca -> {
 
-                        if (!this.eventoArcaPendingRepository.findTopByArcaKey(eventoArca.getChiaveArca()).isPresent()) {
+                        if (!this.eventoArcaPendingRepository.findTopByArcaKeyAndIdApplicazione(eventoArca.getChiaveArca(), applicazione.getId()).isPresent()) {
                             EventoArcaPending eventoArcaPending = new EventoArcaPending();
                             eventoArcaPending.setIdApplicazione(applicazione.getId());
                             eventoArcaPending.setArcaKey(eventoArca.getChiaveArca());

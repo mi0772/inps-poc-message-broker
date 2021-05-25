@@ -1,7 +1,7 @@
 package it.inps.pocmessagebroker.processors;
 
 import it.inps.pocmessagebroker.config.EventTransactionFinalizerRouteConfig;
-import it.inps.pocmessagebroker.repository.ApplicationeRepository;
+import it.inps.pocmessagebroker.repository.ApplicazioneRepository;
 import it.inps.pocmessagebroker.repository.EventoArcaPendingRepository;
 import it.inps.pocmessagebroker.wsclients.ArcaNotificaEventiWSClient;
 import lombok.extern.slf4j.Slf4j;
@@ -18,13 +18,13 @@ import java.io.IOException;
 public class EventTransactionFinalizerProcessor implements Processor {
 
     private final EventoArcaPendingRepository eventoArcaPendingRepository;
-    private final ApplicationeRepository applicationeRepository;
+    private final ApplicazioneRepository applicazioneRepository;
     private final ArcaNotificaEventiWSClient arcaNotificaEventiWSClient;
     private final EventTransactionFinalizerRouteConfig config;
 
-    public EventTransactionFinalizerProcessor(EventoArcaPendingRepository eventoArcaPendingRepository, ApplicationeRepository applicationeRepository, ArcaNotificaEventiWSClient arcaNotificaEventiWSClient, EventTransactionFinalizerRouteConfig config) {
+    public EventTransactionFinalizerProcessor(EventoArcaPendingRepository eventoArcaPendingRepository, ApplicazioneRepository applicazioneRepository, ArcaNotificaEventiWSClient arcaNotificaEventiWSClient, EventTransactionFinalizerRouteConfig config) {
         this.eventoArcaPendingRepository = eventoArcaPendingRepository;
-        this.applicationeRepository = applicationeRepository;
+        this.applicazioneRepository = applicazioneRepository;
         this.arcaNotificaEventiWSClient = arcaNotificaEventiWSClient;
         this.config = config;
     }
@@ -35,7 +35,7 @@ public class EventTransactionFinalizerProcessor implements Processor {
         log.info("======================================================================");
         log.info("* EVENTI ARCA - INVIO A WS EVENTI COMPLETATI");
 
-        this.applicationeRepository.findAll()
+        this.applicazioneRepository.findAll()
                 .forEach(applicazione -> {
                     log.info("    Applicazione : {}", applicazione.getAppName());
 

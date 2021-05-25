@@ -2,7 +2,7 @@ package it.inps.pocmessagebroker.wsclients.impl;
 
 import it.inps.pocmessagebroker.domain.Applicazione;
 import it.inps.pocmessagebroker.model.EventoArca;
-import it.inps.pocmessagebroker.model.EventoArcaPending;
+import it.inps.pocmessagebroker.domain.EventoArcaPending;
 import it.inps.pocmessagebroker.wsclients.ArcaNotificaEventiWSClient;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

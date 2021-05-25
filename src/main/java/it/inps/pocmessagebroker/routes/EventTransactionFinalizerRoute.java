@@ -22,9 +22,6 @@ public class EventTransactionFinalizerRoute extends RouteBuilder {
 
     @Override
     public void configure() throws Exception {
-
-        from("timer://simpleTimer?period=" + config.getInterval())
-                .process(eventTransactionFinalizerProcessor);
-
+        from("direct:event_finalize").process(eventTransactionFinalizerProcessor);
     }
 }

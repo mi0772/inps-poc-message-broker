@@ -2,7 +2,7 @@ package it.inps.pocmessagebroker.wsclients;
 
 import it.inps.pocmessagebroker.domain.Applicazione;
 import it.inps.pocmessagebroker.model.EventoArca;
-import it.inps.pocmessagebroker.model.EventoArcaPending;
+import it.inps.pocmessagebroker.domain.EventoArcaPending;
 
 import javax.xml.bind.JAXBException;
 import java.io.IOException;
