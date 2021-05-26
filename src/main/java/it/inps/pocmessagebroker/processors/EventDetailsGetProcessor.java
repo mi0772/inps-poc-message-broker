@@ -23,12 +23,10 @@ import java.util.Map;
 public class EventDetailsGetProcessor implements Processor {
 
     private final ArcaIntraWSClient wsClient;
-    private final ApplicazioneRepository applicazioneRepository;
 
     @Autowired
     public EventDetailsGetProcessor(ArcaIntraWSClient wsClient, ApplicazioneRepository applicazioneRepository) {
         this.wsClient = wsClient;
-        this.applicazioneRepository = applicazioneRepository;
     }
 
     @Override
@@ -39,23 +37,12 @@ public class EventDetailsGetProcessor implements Processor {
 
         elencoEventi.keySet().forEach(evento -> {
             List<Long> applicazioni = elencoEventi.get(evento);
-            var applicazione = this.applicazioneRepository.getOne(applicazioni.get(0));
-
-            var request = EventoArcaDetailsSearchRequest.builder()
-                    .applicazione(applicazione)
-                    .ricerca(EventoArcaDetailsSearchRequest.Ricerca
-                            .builder()
-                            .tipoChiaveRicerca("a")
-                            .build())
-                    .sicurezza(EventoArcaDetailsSearchRequest.Sicurezza
-                            .builder()
-                            .build());
+            var request = new EventoArcaDetailsSearchRequest(evento.getArcaKey());
 
             try {
-                var response = wsClient.getDetails(request.build());
+                var response = wsClient.getDetails(request);
                 evento.setXml(EventoArcaDetails.fromWSResponse(response).getXml());
                 applicazioni.forEach(app -> result.add(new Result(app, evento)));
-
             }
             catch (JAXBException | IOException e) {
                 throw new RuntimeException();

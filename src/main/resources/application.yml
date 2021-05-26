@@ -6,6 +6,13 @@ routes:
   event-finalizer:
     wsEndpoint: https://ws.svil.inps/host/ArcaNotificaEventiWS
 
+ws:
+  arcaintra:
+    appKey: XXXX
+    appName: XXXX
+    userId: XXXX
+    identityProvider: XXXX
+
 camel:
   springboot:
     main-run-controller: false
