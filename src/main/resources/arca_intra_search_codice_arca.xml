@@ -13,11 +13,11 @@
                 <arca:CodiceTipoOperatore>U</arca:CodiceTipoOperatore>
                 <arca:Provenienza>PC</arca:Provenienza>
                 <arca:CodiceFiscaleOperatore/>
-                <arca:MatricolaINPS>AB02697<arca:MatricolaINPS/>
+                <arca:MatricolaINPS>AB02697</arca:MatricolaINPS>
                 <arca:SedeRichiesta>003900</arca:SedeRichiesta>
                 <arca:GestioneApplOrigine>999</arca:GestioneApplOrigine>
                 <arca:SedeApplOrigine>003900</arca:SedeApplOrigine>
-                <arca:PgmApplOrigine> AB02697</arca:PgmApplOrigine>
+                <arca:PgmApplOrigine>AB02697</arca:PgmApplOrigine>
                 <arca:TranApplOrigine>WSINTRA</arca:TranApplOrigine>
                 <arca:Funzione>RO</arca:Funzione>
                 <arca:WsReserved>WEB</arca:WsReserved>

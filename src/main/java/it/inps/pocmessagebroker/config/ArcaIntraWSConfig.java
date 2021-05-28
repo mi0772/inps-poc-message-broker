@@ -12,5 +12,6 @@ public class ArcaIntraWSConfig {
     private String appName;
     private String userId;
     private String identityProvider;
-
+    private String profilo;
+    private String tipoChiave;
 }

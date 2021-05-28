@@ -8,10 +8,12 @@ routes:
 
 ws:
   arcaintra:
-    appKey: XXXX
-    appName: XXXX
-    userId: XXXX
-    identityProvider: XXXX
+    appKey: AB02697
+    appName: AB02697
+    userId: BATCH
+    identityProvider: BATCH
+    profilo: 6
+    tipoChiave: 01
 
 camel:
   springboot:
