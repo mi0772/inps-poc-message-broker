@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Component
 @Slf4j
@@ -40,6 +41,7 @@ public class EventDetailsGetProcessor implements Processor {
             EventoArcaDetailsSearchRequest request = new EventoArcaDetailsSearchRequest(evento.getArcaKey());
 
             try {
+                log.info("{}: richiesta dettaglio evento arcakey = {}", applicazioni.stream().map(x -> ""+x).collect(Collectors.joining(",")), request.getArcaKey() );
                 String response = wsClient.getDetails(request);
                 evento.setXml(EventoArcaDetails.fromWSResponse(response).getXml());
                 applicazioni.forEach(app -> result.add(new Result(app, evento)));
