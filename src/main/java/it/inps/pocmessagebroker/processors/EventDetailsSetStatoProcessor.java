@@ -1,10 +1,6 @@
 package it.inps.pocmessagebroker.processors;
 
-import com.google.gson.Gson;
-import it.inps.pocmessagebroker.domain.Applicazione;
 import it.inps.pocmessagebroker.domain.EventoArcaPending;
-import it.inps.pocmessagebroker.model.EventoArcaDetails;
-import it.inps.pocmessagebroker.model.EventoArcaPendingMessage;
 import it.inps.pocmessagebroker.repository.ApplicazioneRepository;
 import it.inps.pocmessagebroker.repository.EventoArcaPendingRepository;
 import lombok.extern.slf4j.Slf4j;

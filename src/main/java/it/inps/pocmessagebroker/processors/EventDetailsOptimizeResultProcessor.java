@@ -1,7 +1,6 @@
 package it.inps.pocmessagebroker.processors;
 
 import it.inps.pocmessagebroker.domain.EventoArcaPending;
-import it.inps.pocmessagebroker.model.EventoArca;
 import it.inps.pocmessagebroker.repository.EventoArcaPendingRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.camel.Exchange;
