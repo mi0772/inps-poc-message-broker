@@ -1,6 +1,7 @@
 package it.inps.pocmessagebroker.processors;
 
 import it.inps.pocmessagebroker.config.EventTransactionFinalizerRouteConfig;
+import it.inps.pocmessagebroker.domain.EventoArcaPending;
 import it.inps.pocmessagebroker.repository.ApplicazioneRepository;
 import it.inps.pocmessagebroker.repository.EventoArcaPendingRepository;
 import it.inps.pocmessagebroker.wsclients.ArcaNotificaEventiWSClient;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Component;
 
 import javax.xml.bind.JAXBException;
 import java.io.IOException;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 
@@ -35,11 +37,11 @@ public class EventTransactionFinalizerProcessor implements Processor {
 
         log.info("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - ");
         log.info("fase 3/3 : invio conferma al WS Arca per gli eventi completati");
-        var inviati = new AtomicInteger(0);
+        AtomicInteger inviati = new AtomicInteger(0);
         this.applicazioneRepository.findAll()
                 .forEach(applicazione -> {
                     try {
-                        var elencoMessaggiCompleti = this.eventoArcaPendingRepository.findAllByStatoIsAndIdApplicazione(2, applicazione.getId());
+                        List<EventoArcaPending> elencoMessaggiCompleti = this.eventoArcaPendingRepository.findAllByStatoIsAndIdApplicazione(2, applicazione.getId());
                         log.info("{}: messaggi completati da inviare : {}", applicazione.getAppName(), elencoMessaggiCompleti.size());
                         elencoMessaggiCompleti.forEach(messaggio -> {
                             messaggio.setXml(messaggio.getXml().replace("<RETURNCODE/>","<RETURNCODE>OK</RETURNCODE>"));
@@ -58,7 +60,7 @@ public class EventTransactionFinalizerProcessor implements Processor {
                     } catch (IOException | JAXBException e) {
                         e.printStackTrace();
                     }
-                    log.info("totale eventi segnati come comletato: {}", inviati.get());
+                    log.info("totale eventi segnati come completato: {}", inviati.get());
                 });
 
 

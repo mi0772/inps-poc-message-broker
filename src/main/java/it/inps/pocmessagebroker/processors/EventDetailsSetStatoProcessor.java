@@ -1,6 +1,8 @@
 package it.inps.pocmessagebroker.processors;
 
 import com.google.gson.Gson;
+import it.inps.pocmessagebroker.domain.Applicazione;
+import it.inps.pocmessagebroker.domain.EventoArcaPending;
 import it.inps.pocmessagebroker.model.EventoArcaDetails;
 import it.inps.pocmessagebroker.model.EventoArcaPendingMessage;
 import it.inps.pocmessagebroker.repository.ApplicazioneRepository;
@@ -27,17 +29,13 @@ public class EventDetailsSetStatoProcessor implements Processor {
     @Override
     public void process(Exchange exchange) throws Exception {
 
-        var eventoDetails = (EventoArcaDetails)exchange.getProperty("eventoDetails");
+        EventoArcaPending eventoArcaPending = (EventoArcaPending)exchange.getIn().getHeader("eventPending");
+        Long idApplicazione = (Long)exchange.getIn().getHeader("idApplicazione");
 
-        var eventoPending = new Gson().fromJson(exchange.getIn().getBody().toString(), EventoArcaPendingMessage.class);
-        var ev = this.eventoArcaPendingRepository.findByArcaKeyAndIdApplicazione(eventoPending.getArcaKey(), eventoPending.getApplicazione().getId()).orElseThrow(RuntimeException::new);
-        ev.setStato(2);
-        this.eventoArcaPendingRepository.save(ev);
-        log.info("    - MEMORIZZATO EVENTO CON STATO 2 IN TABELLA, MARCATO PER L'INVIO COME EVENTO COMPLETATO: {}", eventoDetails);
+        log.info("    - MEMORIZZATO EVENTO CON STATO 2 IN TABELLA, MARCATO PER L'INVIO COME EVENTO COMPLETATO: {}", eventoArcaPending.getArcaKey());
 
-        var application = this.applicazioneRepository.findById(ev.getIdApplicazione()).orElseThrow(RuntimeException::new);
-
-        exchange.getIn().setBody(eventoDetails.getXml());
-        exchange.getIn().setHeader("applicationQueue", "jms:queue:" + application.getQueue());
+        EventoArcaPending eventPending = this.eventoArcaPendingRepository.findTopByArcaKeyAndIdApplicazione(eventoArcaPending.getArcaKey(), idApplicazione).orElseThrow(RuntimeException::new);
+        eventPending.setStato(2);
+        this.eventoArcaPendingRepository.save(eventPending);
     }
 }

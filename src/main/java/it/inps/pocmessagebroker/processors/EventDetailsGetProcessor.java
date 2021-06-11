@@ -32,15 +32,15 @@ public class EventDetailsGetProcessor implements Processor {
     @Override
     public void process(Exchange exchange) throws Exception {
 
-        var elencoEventi = (Map<EventoArcaPending, List<Long>>)exchange.getIn().getBody();
-        var result = new ArrayList<Result>(1000);
+        Map<EventoArcaPending, List<Long>> elencoEventi = (Map<EventoArcaPending, List<Long>>)exchange.getIn().getBody();
+        List<Result> result = new ArrayList<Result>(1000);
 
         elencoEventi.keySet().forEach(evento -> {
             List<Long> applicazioni = elencoEventi.get(evento);
-            var request = new EventoArcaDetailsSearchRequest(evento.getArcaKey());
+            EventoArcaDetailsSearchRequest request = new EventoArcaDetailsSearchRequest(evento.getArcaKey());
 
             try {
-                var response = wsClient.getDetails(request);
+                String response = wsClient.getDetails(request);
                 evento.setXml(EventoArcaDetails.fromWSResponse(response).getXml());
                 applicazioni.forEach(app -> result.add(new Result(app, evento)));
             }

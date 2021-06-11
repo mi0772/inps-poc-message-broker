@@ -1,0 +1,14 @@
+
+Ambiente TEST
+Applicazione AB02697
+Codice Archivio 999
+Progetto Z
+Profilo  6
+Servizio Utilizzato ARCAINTRANEWWS
+Area DCSIT DATA GOVERNANCE E ANALYTICS
+Dirigente Area RAISS GIANLUIGI
+Referente INPS TARANTINO ANTONELLA
+Descrizione POC ARCA
+ArcaPanel WS NO
+Utenza Applicativa SI
+Utenza Arcatel NO

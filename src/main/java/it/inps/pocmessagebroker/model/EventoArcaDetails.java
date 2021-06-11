@@ -12,6 +12,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.Serializable;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -38,7 +39,7 @@ public class EventoArcaDetails implements Serializable {
             dbf.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
             DocumentBuilder db = dbf.newDocumentBuilder();
 
-            var in = new ByteArrayInputStream(rawResponse.getBytes(StandardCharsets.UTF_8));
+            InputStream in = new ByteArrayInputStream(rawResponse.getBytes(StandardCharsets.UTF_8));
             Document doc = db.parse(in);
             doc.getDocumentElement().normalize();
 

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project basedir="." default="build" name="MbArca">
+    <property environment="env" />
+    <property name="debuglevel" value="source,lines,vars" />
+    <property name="location" value="../IT606_MbArca" />
+    <property name="start-class" value="it.inps.pocmessagebroker.PocMessageBrokerApplication" />
+    <property name="target" value="1.8" />
+    <property name="source" value="1.8" />
+    <property name="resourcesDir" value="src/main/resources"/>
+    <path id="libraryclasspath">
+        <fileset dir="${location}/JAR" includes="*.jar"/>
+    </path>
+    <path id="classpath">
+        <path refid="libraryclasspath" />
+        <pathelement location="bin" />
+    </path>
+    <target name="init" depends="clean">
+        <mkdir dir="bin" />
+        <copy includeemptydirs="false" todir="bin">
+            <fileset dir="src/main/resources">
+                <exclude name="**/*.java" />
+                <exclude name="**/*.properties" />
+                <exclude name="**/libs/*" />
+                <include name="**/wsdl/*" />
+            </fileset>
+        </copy>
+        <copy includeemptydirs="false" todir="bin">
+            <fileset dir="src/main/java">
+                <exclude name="**/*.java" />
+            </fileset>
+        </copy>
+    </target>
+    <target name="clean">
+        <delete dir="bin" />
+    </target>
+    <target depends="clean" name="cleanall" />
+    <target depends="build-subprojects,build-project" name="build" />
+    <target name="build-subprojects" />
+    <target depends="init" name="build-project">
+        <echo message="${ant.project.name}: ${ant.file}" />
+        <javac debug="true" debuglevel="${debuglevel}" destdir="bin" includeantruntime="false" source="${source}" target="${target}" compiler="javac1.7">
+            <src path="src/main/resources" />
+            <src path="src/main/java" />
+            <classpath refid="classpath" />
+            <compilerarg line="-Djava.endorsed.dirs=${location}/JAR" />
+        </javac>
+        <jar destfile="${basedir}/${location}/${ant.project.name}.jar" compress="false" basedir="bin">
+            <fileset dir="${resourcesDir}" />
+            <manifest>
+                <attribute name="Main-Class" value="${start-class}" />
+                <attribute name="Spring-Boot-Lib" value="BOOT-INF/lib/" />
+                <attribute name="Spring-Boot-Classes" value="BOOT-INF/classes/" />
+            </manifest>
+        </jar>
+    </target>
+</project>
+d

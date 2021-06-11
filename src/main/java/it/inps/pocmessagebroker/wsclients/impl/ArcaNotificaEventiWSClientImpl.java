@@ -26,6 +26,7 @@ public class ArcaNotificaEventiWSClientImpl implements ArcaNotificaEventiWSClien
 
     private final RestTemplate restTemplate;
 
+
     @Autowired
     public ArcaNotificaEventiWSClientImpl(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;

@@ -41,7 +41,7 @@ public class EventDiscoveryProcessor implements Processor {
         this.applicazioneRepository.findAll()
                 .forEach(applicazione -> {
                     log.info("{}: interrogazione WS in corso ...", applicazione.getAppName());
-                    var nuoviEventi = this.arcaNotificaEventiWSClient.getEventi(this.config.getWsEndpoint(), applicazione);
+                    List<EventoArca> nuoviEventi = this.arcaNotificaEventiWSClient.getEventi(this.config.getWsEndpoint(), applicazione);
                     result.put(applicazione, nuoviEventi);
                     log.info("{}: il servizio ha restituito nr: {} eventi", applicazione.getAppName(), nuoviEventi.size());
                 });

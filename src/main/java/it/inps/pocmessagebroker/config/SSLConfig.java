@@ -9,7 +9,7 @@ import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 
 @Configuration
-@Profile("dev")
+@Profile({"dev","test"})
 public class SSLConfig {
 
     @Bean

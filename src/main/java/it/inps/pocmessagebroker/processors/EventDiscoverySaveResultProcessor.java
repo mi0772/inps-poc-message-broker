@@ -27,19 +27,19 @@ public class EventDiscoverySaveResultProcessor implements Processor {
 
     @Override
     public void process(Exchange exchange) {
-        var eventiArca = (Map<Applicazione, List<EventoArca>>)exchange.getProperties().get("events");
+        Map<Applicazione, List<EventoArca>> eventiArca = (Map<Applicazione, List<EventoArca>>)exchange.getProperties().get("events");
 
         log.info("salvataggio lista eventi su database");
 
-        var salvati = new AtomicInteger(0);
-        var scartati = new AtomicInteger(0);
+        AtomicInteger salvati = new AtomicInteger(0);
+        AtomicInteger scartati = new AtomicInteger(0);
 
         eventiArca.keySet()
                 .forEach(applicazione -> {
                     AtomicInteger tSalvati = new AtomicInteger();
                     AtomicInteger tScartati = new AtomicInteger();
                     log.info("{}: controllo gli eventi ricevuti per l'applicazione", applicazione.getAppName());
-                    var eventi = eventiArca.get(applicazione);
+                    List<EventoArca> eventi = eventiArca.get(applicazione);
                     eventi.forEach(eventoArca -> {
 
                         if (!this.eventoArcaPendingRepository.findTopByArcaKeyAndIdApplicazione(eventoArca.getChiaveArca(), applicazione.getId()).isPresent()) {

@@ -1,6 +1,7 @@
 package it.inps.pocmessagebroker.processors;
 
 import it.inps.pocmessagebroker.domain.EventoArcaPending;
+import it.inps.pocmessagebroker.model.EventoArca;
 import it.inps.pocmessagebroker.repository.EventoArcaPendingRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.camel.Exchange;
@@ -8,6 +9,7 @@ import org.apache.camel.Processor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,7 +18,7 @@ import java.util.stream.Collectors;
 @Component
 @Slf4j
 public class EventDetailsOptimizeResultProcessor implements Processor {
-    private EventoArcaPendingRepository eventoArcaPendingRepository;
+    private final EventoArcaPendingRepository eventoArcaPendingRepository;
 
     @Autowired
     public EventDetailsOptimizeResultProcessor(EventoArcaPendingRepository eventoArcaPendingRepository) {
@@ -34,7 +36,7 @@ public class EventDetailsOptimizeResultProcessor implements Processor {
         log.info("analisi elenco eventi per ottimizzazione delle chiamate ...");
         Map<EventoArcaPending, List<Long>> res = new HashMap<>();
 
-        var v = elencoEventi.stream().collect(Collectors.toMap(EventoArcaPending::getArcaKey, p -> p, (p, q) -> p)).values();
+        Collection<EventoArcaPending> v = elencoEventi.stream().collect(Collectors.toMap(EventoArcaPending::getArcaKey, p -> p, (p, q) -> p)).values();
         v.forEach(eventoArcaPending -> res.put(eventoArcaPending, elencoEventi.stream().filter(x -> x.getArcaKey().equals(eventoArcaPending.getArcaKey())).map(EventoArcaPending::getIdApplicazione).collect(Collectors.toList())));
 
         log.info("ottimizzazione completata, verranno eseguite {} chiamate al WS di dettaglio invece di {}", res.values().size(), elencoEventi.size());

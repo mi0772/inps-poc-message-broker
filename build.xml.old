@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project basedir="." default="build" name="MbArca">
+    <property environment="env" />
+    <property name="debuglevel" value="source,lines,vars" />
+    <property name="location" value="../IT606_MbArca" />
+    <property name="start-class" value="it.inps.pocmessagebroker.PocMessageBrokerApplication" />
+    <property name="target" value="1.8" />
+    <property name="source" value="1.8" />
+    <path id="libraryclasspath">
+        <pathelement location="${location}/JAR/HdrHistogram-2.1.12.jar"/>
+        <pathelement location="${location}/JAR/HikariCP-3.4.5.jar"/>
+        <pathelement location="${location}/JAR/LatencyUtils-2.0.3.jar"/>
+        <pathelement location="${location}/JAR/activemq-broker-5.16.1.jar"/>
+        <pathelement location="${location}/JAR/activemq-client-5.16.1.jar"/>
+        <pathelement location="${location}/JAR/activemq-jms-pool-5.16.1.jar"/>
+        <pathelement location="${location}/JAR/activemq-openwire-legacy-5.16.1.jar"/>
+        <pathelement location="${location}/JAR/activemq-pool-5.16.1.jar"/>
+        <pathelement location="${location}/JAR/activemq-spring-5.16.1.jar"/>
+        <pathelement location="${location}/JAR/antlr-2.7.7.jar"/>
+        <pathelement location="${location}/JAR/artemis-commons-2.15.0.jar"/>
+        <pathelement location="${location}/JAR/artemis-core-client-2.15.0.jar"/>
+        <pathelement location="${location}/JAR/artemis-jms-client-2.15.0.jar"/>
+        <pathelement location="${location}/JAR/artemis-selector-2.15.0.jar"/>
+        <pathelement location="${location}/JAR/aspectjweaver-1.9.6.jar"/>
+        <pathelement location="${location}/JAR/byte-buddy-1.10.22.jar"/>
+        <pathelement location="${location}/JAR/camel-activemq-3.9.0.jar"/>
+        <pathelement location="${location}/JAR/camel-api-3.9.0.jar"/>
+        <pathelement location="${location}/JAR/camel-base-3.9.0.jar"/>
+        <pathelement location="${location}/JAR/camel-base-engine-3.9.0.jar"/>
+        <pathelement location="${location}/JAR/camel-bean-3.9.0.jar"/>
+        <pathelement location="${location}/JAR/camel-bean-starter-3.9.0.jar"/>
+        <pathelement location="${location}/JAR/camel-browse-3.9.0.jar"/>
+        <pathelement location="${location}/JAR/camel-browse-starter-3.9.0.jar"/>
+        <pathelement location="${location}/JAR/camel-cloud-3.9.0.jar"/>
+        <pathelement location="${location}/JAR/camel-cluster-3.9.0.jar"/>
+        <pathelement location="${location}/JAR/camel-controlbus-3.9.0.jar"/>
+        <pathelement location="${location}/JAR/camel-controlbus-starter-3.9.0.jar"/>
+        <pathelement location="${location}/JAR/camel-core-engine-3.9.0.jar"/>
+        <pathelement location="${location}/JAR/camel-core-languages-3.9.0.jar"/>
+        <pathelement location="${location}/JAR/camel-core-model-3.9.0.jar"/>
+        <pathelement location="${location}/JAR/camel-core-processor-3.9.0.jar"/>
+        <pathelement location="${location}/JAR/camel-core-reifier-3.9.0.jar"/>
+        <pathelement location="${location}/JAR/camel-core-starter-3.9.0.jar"/>
+        <pathelement location="${location}/JAR/camel-core-xml-3.9.0.jar"/>
+        <pathelement location="${location}/JAR/camel-dataformat-3.9.0.jar"/>
+        <pathelement location="${location}/JAR/camel-dataformat-starter-3.9.0.jar"/>
+        <pathelement location="${location}/JAR/camel-dataset-3.9.0.jar"/>
+        <pathelement location="${location}/JAR/camel-dataset-starter-3.9.0.jar"/>
+        <pathelement location="${location}/JAR/camel-direct-3.9.0.jar"/>
+        <pathelement location="${location}/JAR/camel-direct-starter-3.9.0.jar"/>
+        <pathelement location="${location}/JAR/camel-directvm-3.9.0.jar"/>
+        <pathelement location="${location}/JAR/camel-directvm-starter-3.9.0.jar"/>
+        <pathelement location="${location}/JAR/camel-file-3.9.0.jar"/>
+        <pathelement location="${location}/JAR/camel-file-starter-3.9.0.jar"/>
+        <pathelement location="${location}/JAR/camel-health-3.9.0.jar"/>
+        <pathelement location="${location}/JAR/camel-jms-3.9.0.jar"/>
+        <pathelement location="${location}/JAR/camel-language-3.9.0.jar"/>
+        <pathelement location="${location}/JAR/camel-language-starter-3.9.0.jar"/>
+        <pathelement location="${location}/JAR/camel-log-3.9.0.jar"/>
+        <pathelement location="${location}/JAR/camel-log-starter-3.9.0.jar"/>
+        <pathelement location="${location}/JAR/camel-main-3.9.0.jar"/>
+        <pathelement location="${location}/JAR/camel-management-api-3.9.0.jar"/>
+        <pathelement location="${location}/JAR/camel-mock-3.9.0.jar"/>
+        <pathelement location="${location}/JAR/camel-mock-starter-3.9.0.jar"/>
+        <pathelement location="${location}/JAR/camel-ref-3.9.0.jar"/>
+        <pathelement location="${location}/JAR/camel-ref-starter-3.9.0.jar"/>
+        <pathelement location="${location}/JAR/camel-rest-3.9.0.jar"/>
+        <pathelement location="${location}/JAR/camel-rest-starter-3.9.0.jar"/>
+        <pathelement location="${location}/JAR/camel-saga-3.9.0.jar"/>
+        <pathelement location="${location}/JAR/camel-saga-starter-3.9.0.jar"/>
+        <pathelement location="${location}/JAR/camel-scheduler-3.9.0.jar"/>
+        <pathelement location="${location}/JAR/camel-scheduler-starter-3.9.0.jar"/>
+        <pathelement location="${location}/JAR/camel-seda-3.9.0.jar"/>
+        <pathelement location="${location}/JAR/camel-seda-starter-3.9.0.jar"/>
+        <pathelement location="${location}/JAR/camel-spring-3.9.0.jar"/>
+        <pathelement location="${location}/JAR/camel-spring-boot-3.9.0.jar"/>
+        <pathelement location="${location}/JAR/camel-spring-boot-starter-3.9.0.jar"/>
+        <pathelement location="${location}/JAR/camel-spring-main-3.9.0.jar"/>
+        <pathelement location="${location}/JAR/camel-spring-xml-3.9.0.jar"/>
+        <pathelement location="${location}/JAR/camel-stream-3.9.0.jar"/>
+        <pathelement location="${location}/JAR/camel-stub-3.9.0.jar"/>
+        <pathelement location="${location}/JAR/camel-stub-starter-3.9.0.jar"/>
+        <pathelement location="${location}/JAR/camel-support-3.9.0.jar"/>
+        <pathelement location="${location}/JAR/camel-timer-3.9.0.jar"/>
+        <pathelement location="${location}/JAR/camel-timer-starter-3.9.0.jar"/>
+        <pathelement location="${location}/JAR/camel-tooling-model-3.9.0.jar"/>
+        <pathelement location="${location}/JAR/camel-util-3.9.0.jar"/>
+        <pathelement location="${location}/JAR/camel-util-json-3.9.0.jar"/>
+        <pathelement location="${location}/JAR/camel-validator-3.9.0.jar"/>
+        <pathelement location="${location}/JAR/camel-validator-starter-3.9.0.jar"/>
+        <pathelement location="${location}/JAR/camel-vm-3.9.0.jar"/>
+        <pathelement location="${location}/JAR/camel-vm-starter-3.9.0.jar"/>
+        <pathelement location="${location}/JAR/camel-xml-jaxb-3.9.0.jar"/>
+        <pathelement location="${location}/JAR/camel-xml-jaxb-dsl-3.9.0.jar"/>
+        <pathelement location="${location}/JAR/camel-xml-jaxp-3.9.0.jar"/>
+        <pathelement location="${location}/JAR/camel-xml-jaxp-starter-3.9.0.jar"/>
+        <pathelement location="${location}/JAR/camel-xpath-3.9.0.jar"/>
+        <pathelement location="${location}/JAR/camel-xpath-starter-3.9.0.jar"/>
+        <pathelement location="${location}/JAR/camel-xslt-3.9.0.jar"/>
+        <pathelement location="${location}/JAR/camel-xslt-starter-3.9.0.jar"/>
+        <pathelement location="${location}/JAR/classmate-1.5.1.jar"/>
+        <pathelement location="${location}/JAR/commons-beanutils-1.9.4.jar"/>
+        <pathelement location="${location}/JAR/commons-collections-3.2.2.jar"/>
+        <pathelement location="${location}/JAR/commons-pool2-2.9.0.jar"/>
+        <pathelement location="${location}/JAR/dom4j-2.1.3.jar"/>
+        <pathelement location="${location}/JAR/geronimo-j2ee-management_1.1_spec-1.0.1.jar"/>
+        <pathelement location="${location}/JAR/geronimo-jms_1.1_spec-1.1.1.jar"/>
+        <pathelement location="${location}/JAR/geronimo-jta_1.1_spec-1.1.1.jar"/>
+        <pathelement location="${location}/JAR/gson-2.8.6.jar"/>
+        <pathelement location="${location}/JAR/h2-1.4.200.jar"/>
+        <pathelement location="${location}/JAR/hawtbuf-1.11.jar"/>
+        <pathelement location="${location}/JAR/hibernate-commons-annotations-5.1.2.Final.jar"/>
+        <pathelement location="${location}/JAR/hibernate-core-5.4.30.Final.jar"/>
+        <pathelement location="${location}/JAR/istack-commons-runtime-3.0.12.jar"/>
+        <pathelement location="${location}/JAR/jackson-annotations-2.11.4.jar"/>
+        <pathelement location="${location}/JAR/jackson-core-2.11.4.jar"/>
+        <pathelement location="${location}/JAR/jackson-databind-2.11.4.jar"/>
+        <pathelement location="${location}/JAR/jackson-datatype-jdk8-2.11.4.jar"/>
+        <pathelement location="${location}/JAR/jackson-datatype-jsr310-2.11.4.jar"/>
+        <pathelement location="${location}/JAR/jackson-module-parameter-names-2.11.4.jar"/>
+        <pathelement location="${location}/JAR/jakarta.activation-1.2.2.jar"/>
+        <pathelement location="${location}/JAR/jakarta.activation-api-1.2.2.jar"/>
+        <pathelement location="${location}/JAR/jakarta.annotation-api-1.3.5.jar"/>
+        <pathelement location="${location}/JAR/jakarta.el-3.0.3.jar"/>
+        <pathelement location="${location}/JAR/jakarta.jms-api-2.0.3.jar"/>
+        <pathelement location="${location}/JAR/jakarta.json-api-1.1.6.jar"/>
+        <pathelement location="${location}/JAR/jakarta.persistence-api-2.2.3.jar"/>
+        <pathelement location="${location}/JAR/jakarta.transaction-api-1.3.3.jar"/>
+        <pathelement location="${location}/JAR/jakarta.xml.bind-api-2.3.3.jar"/>
+        <pathelement location="${location}/JAR/jandex-2.2.3.Final.jar"/>
+        <pathelement location="${location}/JAR/javassist-3.27.0-GA.jar"/>
+        <pathelement location="${location}/JAR/jaxb-core-2.3.0.jar"/>
+        <pathelement location="${location}/JAR/jaxb-impl-2.3.3.jar"/>
+        <pathelement location="${location}/JAR/jaxb-runtime-2.3.4.jar"/>
+        <pathelement location="${location}/JAR/jboss-logging-3.4.1.Final.jar"/>
+        <pathelement location="${location}/JAR/jgroups-3.6.13.Final.jar"/>
+        <pathelement location="${location}/JAR/johnzon-core-1.2.10.jar"/>
+        <pathelement location="${location}/JAR/jul-to-slf4j-1.7.30.jar"/>
+        <pathelement location="${location}/JAR/log4j-api-2.13.3.jar"/>
+        <pathelement location="${location}/JAR/log4j-to-slf4j-2.13.3.jar"/>
+        <pathelement location="${location}/JAR/logback-classic-1.2.3.jar"/>
+        <pathelement location="${location}/JAR/logback-core-1.2.3.jar"/>
+        <pathelement location="${location}/JAR/lombok-1.18.20.jar"/>
+        <pathelement location="${location}/JAR/micrometer-core-1.6.6.jar"/>
+        <pathelement location="${location}/JAR/mysql-connector-java-8.0.23.jar"/>
+        <pathelement location="${location}/JAR/netty-buffer-4.1.63.Final.jar"/>
+        <pathelement location="${location}/JAR/netty-codec-4.1.63.Final.jar"/>
+        <pathelement location="${location}/JAR/netty-codec-http-4.1.63.Final.jar"/>
+        <pathelement location="${location}/JAR/netty-codec-socks-4.1.63.Final.jar"/>
+        <pathelement location="${location}/JAR/netty-common-4.1.63.Final.jar"/>
+        <pathelement location="${location}/JAR/netty-handler-4.1.63.Final.jar"/>
+        <pathelement location="${location}/JAR/netty-handler-proxy-4.1.63.Final.jar"/>
+        <pathelement location="${location}/JAR/netty-resolver-4.1.63.Final.jar"/>
+        <pathelement location="${location}/JAR/netty-transport-4.1.63.Final.jar"/>
+        <pathelement location="${location}/JAR/netty-transport-native-epoll-4.1.63.Final-linux-x86_64.jar"/>
+        <pathelement location="${location}/JAR/netty-transport-native-kqueue-4.1.63.Final-osx-x86_64.jar"/>
+        <pathelement location="${location}/JAR/netty-transport-native-unix-common-4.1.63.Final.jar"/>
+        <pathelement location="${location}/JAR/slf4j-api-1.7.30.jar"/>
+        <pathelement location="${location}/JAR/snakeyaml-1.27.jar"/>
+        <pathelement location="${location}/JAR/spring-aop-5.3.6.jar"/>
+        <pathelement location="${location}/JAR/spring-aspects-5.3.6.jar"/>
+        <pathelement location="${location}/JAR/spring-beans-5.3.6.jar"/>
+        <pathelement location="${location}/JAR/spring-boot-2.4.5.jar"/>
+        <pathelement location="${location}/JAR/spring-boot-actuator-2.4.5.jar"/>
+        <pathelement location="${location}/JAR/spring-boot-actuator-autoconfigure-2.4.5.jar"/>
+        <pathelement location="${location}/JAR/spring-boot-autoconfigure-2.4.5.jar"/>
+        <pathelement location="${location}/JAR/spring-boot-jarmode-layertools-2.4.5.jar"/>
+        <pathelement location="${location}/JAR/spring-context-5.3.6.jar"/>
+        <pathelement location="${location}/JAR/spring-core-5.3.6.jar"/>
+        <pathelement location="${location}/JAR/spring-data-commons-2.4.8.jar"/>
+        <pathelement location="${location}/JAR/spring-data-jpa-2.4.8.jar"/>
+        <pathelement location="${location}/JAR/spring-expression-5.3.6.jar"/>
+        <pathelement location="${location}/JAR/spring-jcl-5.3.6.jar"/>
+        <pathelement location="${location}/JAR/spring-jdbc-5.3.6.jar"/>
+        <pathelement location="${location}/JAR/spring-jms-5.3.6.jar"/>
+        <pathelement location="${location}/JAR/spring-messaging-5.3.6.jar"/>
+        <pathelement location="${location}/JAR/spring-orm-5.3.6.jar"/>
+        <pathelement location="${location}/JAR/spring-tx-5.3.6.jar"/>
+        <pathelement location="${location}/JAR/spring-web-5.3.6.jar"/>
+        <pathelement location="${location}/JAR/spring-webmvc-5.3.6.jar"/>
+        <pathelement location="${location}/JAR/tomcat-embed-core-9.0.45.jar"/>
+        <pathelement location="${location}/JAR/tomcat-embed-websocket-9.0.45.jar"/>
+        <pathelement location="${location}/JAR/txw2-2.3.4.jar"/>
+        <pathelement location="${location}/JAR/xbean-spring-4.18.jar"/>
+    </path>
+    <path id="classpath">
+        <path refid="libraryclasspath" />
+        <pathelement location="bin" />
+    </path>
+    <target name="init" depends="clean">
+        <mkdir dir="bin" />
+        <copy includeemptydirs="false" todir="bin">
+            <fileset dir="src/main/resources">
+                <exclude name="**/*.java" />
+                <exclude name="**/*.properties" />
+                <exclude name="**/libs/*" />
+                <include name="**/wsdl/*" />
+            </fileset>
+        </copy>
+        <copy includeemptydirs="false" todir="bin">
+            <fileset dir="src/main/java">
+                <exclude name="**/*.java" />
+            </fileset>
+        </copy>
+    </target>
+    <target name="clean">
+        <delete dir="bin" />
+    </target>
+    <target depends="clean" name="cleanall" />
+    <target depends="build-subprojects,build-project" name="build" />
+    <target name="build-subprojects" />
+    <target depends="init" name="build-project">
+        <echo message="${ant.project.name}: ${ant.file}" />
+        <javac debug="true" debuglevel="${debuglevel}" destdir="bin" includeantruntime="false" source="${source}" target="${target}" compiler="javac1.7">
+            <src path="src/main/resources" />
+            <src path="src/main/java" />
+            <classpath refid="classpath" />
+            <compilerarg line="-Djava.endorsed.dirs=${location}/JAR" />
+        </javac>
+        <jar destfile="${basedir}/${location}/${ant.project.name}.jar" compress="false" basedir="bin">
+            <manifest>
+                <attribute name="Main-Class" value="${start-class}" />
+                <attribute name="Spring-Boot-Lib" value="BOOT-INF/lib/" />
+                <attribute name="Spring-Boot-Classes" value="BOOT-INF/classes/" />
+            </manifest>
+        </jar>
+    </target>
+</project>
