@@ -32,7 +32,7 @@ public class EventDetailsSetDestQueueProcessor implements Processor {
         eventPending.setStato(1);
         this.eventoArcaPendingRepository.save(eventPending);
 
-        exchange.getIn().setHeader("applicationQueue", "jms:queue:" + applicazione.getQueue());
+       // exchange.getIn().setHeader("applicationQueue",  "amqp:queue:" + applicazione.getQueue());
         exchange.getIn().setHeader("eventPending", eventPending);
         exchange.getIn().setHeader("idApplicazione", applicazione.getId());
         exchange.getIn().setBody(result.getEventoArcaPending().getXml());

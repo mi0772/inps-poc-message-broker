@@ -10,8 +10,8 @@ ws:
   arcaintra:
     #appKey: AB02697
     #appName: AB02697
-    appKey: test
-    appName: test
+    appKey: AB02697
+    appName: AB02697
     userId: BATCH
     identityProvider: BATCH
     profilo: 6
