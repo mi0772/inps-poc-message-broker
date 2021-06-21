@@ -26,3 +26,31 @@ public class ArtemisConfig {
     }
 }
 */
+
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+public class ArtemisConfig {
+/*
+    @Value("${activemq.broker-url}")
+    private String brokerUrl;
+
+    @Bean
+    public ActiveMQConnectionFactory senderActiveMQConnectionFactory() throws JMSException {
+        ActiveMQConnectionFactory activeMQConnectionFactory = new ActiveMQConnectionFactory();
+        activeMQConnectionFactory.setBrokerURL(brokerUrl);
+
+        return activeMQConnectionFactory;
+    }
+
+    @Bean
+    public CachingConnectionFactory cachingConnectionFactory() throws JMSException {
+        return new CachingConnectionFactory(senderActiveMQConnectionFactory());
+    }
+
+    @Bean
+    public JmsTemplate jmsTemplate() throws JMSException {
+        return new JmsTemplate(cachingConnectionFactory());
+    }
+*/
+}
