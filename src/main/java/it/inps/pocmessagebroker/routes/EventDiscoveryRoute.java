@@ -48,7 +48,7 @@ public class EventDiscoveryRoute extends RouteBuilder {
                 log.info("*** Process shutdown complete.");
             }
 
-        }).to("direct:event_finalize").end()
+        }).end()
                 .process(this.discoveryProcessor)
                 .process(this.eventDiscoverySaveResultProcessor)
                 .to("direct:event_details")
