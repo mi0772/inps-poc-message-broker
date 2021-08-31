@@ -43,7 +43,8 @@ public class EventoArcaDetails implements Serializable {
             Document doc = db.parse(in);
             doc.getDocumentElement().normalize();
 
-            NodeList list = doc.getElementsByTagName("p115:RicercaConCodiceFiscaleInteroResponse");
+//            NodeList list = doc.getElementsByTagName("p115:RicercaConCodiceFiscaleInteroResponse");
+            NodeList list = doc.getElementsByTagName("p115:DiacRicercaConCodiceArcaResponse");
 
             return new EventoArcaDetails(nodeToString(list.item(0)));
 

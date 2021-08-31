@@ -28,7 +28,7 @@ public class EventDetailsSetStatoProcessor implements Processor {
         EventoArcaPending eventoArcaPending = (EventoArcaPending)exchange.getIn().getHeader("eventPending");
         Long idApplicazione = (Long)exchange.getIn().getHeader("idApplicazione");
 
-        log.info("    - aggiungo evento arcakey {} per l'invio al servizio di notifica eventi completi", eventoArcaPending.getArcaKey());
+        log.info(" - Imposta OK per arcakey '{}'", eventoArcaPending.getArcaKey());
 
         EventoArcaPending eventPending = this.eventoArcaPendingRepository.findTopByArcaKeyAndIdApplicazione(eventoArcaPending.getArcaKey(), idApplicazione).orElseThrow(RuntimeException::new);
         eventPending.setStato(2);

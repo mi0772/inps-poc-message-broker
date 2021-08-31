@@ -3,7 +3,7 @@
                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <soapenv:Header/>
     <soapenv:Body>
-        <p115:RicercaConCodiceFiscaleInteroResponse xmlns:p115="http://arca.services.soa.sistinf.it">
+        <p115:DiacRicercaConCodiceArcaResponse xmlns:p115="http://arca.services.soa.sistinf.it">
             <p115:Sicurezza>
                 <p115:CodiceTipoOperatore>U</p115:CodiceTipoOperatore>
                 <p115:Provenienza>PC</p115:Provenienza>
@@ -261,6 +261,6 @@
                 <p115:DataEvento>20210219</p115:DataEvento>
                 <p115:ComuneRegAna>A944</p115:ComuneRegAna>
             </p115:Familiare>
-        </p115:RicercaConCodiceFiscaleInteroResponse>
+        </p115:DiacRicercaConCodiceArcaResponse>
     </soapenv:Body>
 </soapenv:Envelope>

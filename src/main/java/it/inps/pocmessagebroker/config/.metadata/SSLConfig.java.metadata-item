@@ -1,0 +1,13 @@
+version=10.2
+item-uid=24909970
+file-version=2
+checksum=327dcfaddbbf125ddffb5c7d2b16b958
+fetch-size=1449
+mtime=1623402525
+item-spec=49543630363A53534C434F4E464947204A4156412D313439313731393736342E412D5352433B32
+item-status=524149534544
+is-extracted=0
+is-headersubst=0
+relpath=MbArca/src/main/java/it/inps/pocmessagebroker/config/SSLConfig.java
+project=49543630363A42315F4D4241524341
+project-uid=24715859

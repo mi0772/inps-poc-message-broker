@@ -3,6 +3,7 @@ package it.inps.pocmessagebroker.wsclients.impl;
 import it.inps.pocmessagebroker.config.ArcaIntraWSConfig;
 import it.inps.pocmessagebroker.config.EventDetailsRouteConfig;
 import it.inps.pocmessagebroker.model.EventoArcaDetailsSearchRequest;
+import it.inps.pocmessagebroker.utils.ReadResource;
 import it.inps.pocmessagebroker.wsclients.ArcaIntraWSClient;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,19 +11,17 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
-import org.springframework.util.ResourceUtils;
 import org.springframework.web.client.RestTemplate;
 
 import javax.xml.bind.JAXBException;
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
 
 @Component
 @Slf4j
 @Profile("!dev")
 public class ArcaIntraWSClientImpl implements ArcaIntraWSClient {
 
+    private final ReadResource readResource;
     private final ArcaIntraWSConfig config;
     private final RestTemplate restTemplate;
 
@@ -30,7 +29,8 @@ public class ArcaIntraWSClientImpl implements ArcaIntraWSClient {
     private final EventDetailsRouteConfig wsConfig;
 
     @Autowired
-    public ArcaIntraWSClientImpl(ArcaIntraWSConfig config, RestTemplate restTemplate, EventDetailsRouteConfig wsConfig) {
+    public ArcaIntraWSClientImpl(ReadResource readResource, ArcaIntraWSConfig config, RestTemplate restTemplate, EventDetailsRouteConfig wsConfig) {
+        this.readResource = readResource;
         this.config = config;
         this.restTemplate = restTemplate;
         this.wsConfig = wsConfig;
@@ -41,8 +41,9 @@ public class ArcaIntraWSClientImpl implements ArcaIntraWSClient {
         try {
             HttpHeaders headers = new HttpHeaders();
             headers.add("Content-Type", "text/xml");
-            File file = ResourceUtils.getFile("classpath:arca_intra_search_codice_arca.xml");
-            String requestString = new String(Files.readAllBytes(file.toPath()));
+            String requestString = readResource.getResourceAsString("arca_intra_search_codice_arca.xml");
+//            File file = ResourceUtils.getFile("classpath:arca_intra_search_codice_arca.xml");
+//            String requestString = new String(Files.readAllBytes(file.toPath()));
             HttpEntity<String> r = new HttpEntity<>(String.format(
                     requestString,
                     config.getAppName(),

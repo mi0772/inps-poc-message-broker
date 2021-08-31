@@ -1,0 +1,13 @@
+version=10.2
+item-uid=25445759
+file-version=3
+checksum=8c80f9363aede09f71ead6082a834d8c
+fetch-size=1599
+mtime=1629818313
+item-spec=49543630363A415254454D4953434F4E464947204A4156412D313638313331313630322E412D5352433B33
+item-status=524149534544
+is-extracted=0
+is-headersubst=0
+relpath=MbArca/src/main/java/it/inps/pocmessagebroker/config/ArtemisConfig.java
+project=49543630363A42315F4D4241524341
+project-uid=24715859

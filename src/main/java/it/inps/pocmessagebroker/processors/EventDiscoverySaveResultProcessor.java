@@ -1,18 +1,21 @@
 package it.inps.pocmessagebroker.processors;
 
-import it.inps.pocmessagebroker.domain.Applicazione;
-import it.inps.pocmessagebroker.model.EventoArca;
-import it.inps.pocmessagebroker.domain.EventoArcaPending;
-import it.inps.pocmessagebroker.repository.EventoArcaPendingRepository;
-import lombok.extern.slf4j.Slf4j;
+import java.sql.Timestamp;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
+
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
+import it.inps.pocmessagebroker.domain.Applicazione;
+import it.inps.pocmessagebroker.domain.EventoArcaPending;
+import it.inps.pocmessagebroker.model.EventoArca;
+import it.inps.pocmessagebroker.repository.EventoArcaPendingRepository;
+import lombok.extern.slf4j.Slf4j;
 
 @Component
 @Slf4j
@@ -38,16 +41,19 @@ public class EventDiscoverySaveResultProcessor implements Processor {
                 .forEach(applicazione -> {
                     AtomicInteger tSalvati = new AtomicInteger();
                     AtomicInteger tScartati = new AtomicInteger();
-                    log.info("{}: controllo gli eventi ricevuti per l'applicazione", applicazione.getAppName());
+                    log.info("{}-{}_{}: controllo eventi ricevuti", applicazione.getAppName(), applicazione.getCodiceArchivio(), applicazione.getProgetto());
                     List<EventoArca> eventi = eventiArca.get(applicazione);
                     eventi.forEach(eventoArca -> {
 
-                        if (!this.eventoArcaPendingRepository.findTopByArcaKeyAndIdApplicazione(eventoArca.getChiaveArca(), applicazione.getId()).isPresent()) {
+                        //if (!this.eventoArcaPendingRepository.findTopByArcaKeyAndIdApplicazione(eventoArca.getChiaveArca(), applicazione.getId()).isPresent()) {
+                        if (!this.eventoArcaPendingRepository.findTopByArcaKeyAndIdApplicazioneAndCodiceEvento(eventoArca.getChiaveArca(), applicazione.getId(), eventoArca.getCODICEEVENTO()).isPresent()) {
                             EventoArcaPending eventoArcaPending = new EventoArcaPending();
                             eventoArcaPending.setIdApplicazione(applicazione.getId());
                             eventoArcaPending.setArcaKey(eventoArca.getChiaveArca());
                             eventoArcaPending.setXml(eventoArca.getXml());
                             eventoArcaPending.setStato(0);
+                            eventoArcaPending.setDataEvento(new Timestamp(new Date().getTime()));
+                            eventoArcaPending.setCodiceEvento(eventoArca.getCODICEEVENTO());
                             this.eventoArcaPendingRepository.save(eventoArcaPending);
                             salvati.incrementAndGet();
                             tSalvati.getAndIncrement();
@@ -58,11 +64,11 @@ public class EventDiscoverySaveResultProcessor implements Processor {
                         }
                     });
 
-                    log.info("{}: {} nuovi eventi registrati", applicazione.getAppName(), tSalvati.get());
-                    log.info("{}: {} nuovi eventi ignorati poichè già registrati in precedenza", applicazione.getAppName(), tScartati.get());
+                    log.info("{}-{}_{}: {} nuovi eventi registrati", applicazione.getAppName(), applicazione.getCodiceArchivio(), applicazione.getProgetto(), tSalvati.get());
+                    log.info("{}-{}_{}: {} nuovi eventi ignorati (registrati in precedenza)", applicazione.getAppName(), applicazione.getCodiceArchivio(), applicazione.getProgetto(), tScartati.get());
                 });
 
-        log.info("totale nuovi eventi registrati: {}",salvati.get());
-        log.info("totale nuovi eventi ignorati poichè già registrati in precedenza : {}", scartati.get());
+        log.info("totale nuovi eventi registrati = {}",salvati.get());
+        log.info("totale nuovi eventi ignorati (registrati in precedenza) = {}", scartati.get());
     }
 }

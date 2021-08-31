@@ -9,8 +9,11 @@ import java.util.Optional;
 
 public interface EventoArcaPendingRepository extends JpaRepository<EventoArcaPending, Long> {
 
+    Optional<EventoArcaPending> findTopByArcaKeyAndIdApplicazioneAndCodiceEvento(@Param("key") String key, @Param("idApplicazione") Long idApplicazione, @Param("codiceEvento") String codiceEvento);
+
     Optional<EventoArcaPending> findTopByArcaKeyAndIdApplicazione(@Param("key") String key, @Param("idApplicazione") Long idApplicazione);
     List<EventoArcaPending> findAllByStatoIs(@Param("stato") Integer stato);
     List<EventoArcaPending> findAllByStatoIsAndIdApplicazione(@Param("stato") Integer stato, @Param("idApplicazione") Long idApplicazione);
-    Optional<EventoArcaPending> findByArcaKeyAndIdApplicazione(@Param("arcaKey") String arcaKey, @Param("idApplicazione") Long idApplicazione);
+    List<EventoArcaPending> findAllByArcaKeyAndIdApplicazione(@Param("arcaKey") String arcaKey, @Param("idApplicazione") Long idApplicazione);
+
 }

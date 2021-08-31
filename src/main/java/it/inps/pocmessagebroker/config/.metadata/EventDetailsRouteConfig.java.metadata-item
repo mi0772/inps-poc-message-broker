@@ -1,0 +1,13 @@
+version=10.2
+item-uid=24909952
+file-version=2
+checksum=e5c1e9bba9178b4e6f887871fe55dad3
+fetch-size=399
+mtime=1621933098
+item-spec=49543630363A4556454E5444455441494C53524F555445434F4E464947204A4156412D313638313331313630322E412D5352433B32
+item-status=524149534544
+is-extracted=0
+is-headersubst=0
+relpath=MbArca/src/main/java/it/inps/pocmessagebroker/config/EventDetailsRouteConfig.java
+project=49543630363A42315F4D4241524341
+project-uid=24715859

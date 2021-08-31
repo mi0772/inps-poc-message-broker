@@ -2,7 +2,7 @@
 <project basedir="." default="build" name="MbArca">
     <property environment="env" />
     <property name="debuglevel" value="source,lines,vars" />
-    <property name="location" value="../IT606_MbArca" />
+    <property name="location" value="../IT606MbArca" />
     <property name="start-class" value="it.inps.pocmessagebroker.PocMessageBrokerApplication" />
     <property name="target" value="1.8" />
     <property name="source" value="1.8" />
@@ -17,15 +17,24 @@
     <target name="init" depends="clean">
         <mkdir dir="bin" />
         <copy includeemptydirs="false" todir="bin">
+<!--
             <fileset dir="src/main/resources">
                 <exclude name="**/*.java" />
                 <exclude name="**/*.properties" />
                 <exclude name="**/libs/*" />
                 <include name="**/wsdl/*" />
             </fileset>
+-->
+			<fileset dir="${resourcesDir}">
+                <exclude name="**/.metadata" />
+                <exclude name="**/.metadata/**" />
+                <exclude name="**/application.yml" />
+            </fileset>
         </copy>
         <copy includeemptydirs="false" todir="bin">
             <fileset dir="src/main/java">
+                <exclude name="**/.metadata" />
+                <exclude name="**/.metadata/**" />
                 <exclude name="**/*.java" />
             </fileset>
         </copy>
@@ -45,7 +54,12 @@
             <compilerarg line="-Djava.endorsed.dirs=${location}/JAR" />
         </javac>
         <jar destfile="${basedir}/${location}/${ant.project.name}.jar" compress="false" basedir="bin">
-            <fileset dir="${resourcesDir}" />
+<!--
+			<fileset dir="${resourcesDir}">
+                <exclude name="**/.metadata" />
+                <exclude name="**/.metadata/**" />
+            </fileset>
+-->
             <manifest>
                 <attribute name="Main-Class" value="${start-class}" />
                 <attribute name="Spring-Boot-Lib" value="BOOT-INF/lib/" />
@@ -54,4 +68,3 @@
         </jar>
     </target>
 </project>
-d

@@ -1,9 +1,16 @@
 package it.inps.pocmessagebroker.domain;
 
+import java.sql.Timestamp;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 import lombok.Getter;
 import lombok.Setter;
-
-import javax.persistence.*;
 
 @Getter
 @Setter
@@ -26,6 +33,12 @@ public class EventoArcaPending {
     @Column(name = "xml")
     private String xml;
 
+    @Column(name = "codice_evento")
+    private String codiceEvento ;
+    
+    @Column(name = "data_evento")
+    private Timestamp dataEvento;
+
     @Override
     public String toString() {
         return "EventoArcaPending{" +
@@ -34,6 +47,8 @@ public class EventoArcaPending {
                 ", arcaKey='" + arcaKey + '\'' +
                 ", stato=" + stato +
                 ", xml=" + xml +
+                ", codiceEvento=" + codiceEvento +
+                ", dataEvento=" + codiceEvento +
                 '}';
     }
 }

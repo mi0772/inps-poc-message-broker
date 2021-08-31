@@ -1,19 +1,22 @@
 package it.inps.pocmessagebroker.processors;
 
+import java.io.IOException;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
+
+import javax.xml.bind.JAXBException;
+
+import org.apache.camel.Exchange;
+import org.apache.camel.Processor;
+import org.springframework.stereotype.Component;
+
 import it.inps.pocmessagebroker.config.EventTransactionFinalizerRouteConfig;
+import it.inps.pocmessagebroker.domain.Applicazione;
 import it.inps.pocmessagebroker.domain.EventoArcaPending;
 import it.inps.pocmessagebroker.repository.ApplicazioneRepository;
 import it.inps.pocmessagebroker.repository.EventoArcaPendingRepository;
 import it.inps.pocmessagebroker.wsclients.ArcaNotificaEventiWSClient;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.camel.Exchange;
-import org.apache.camel.Processor;
-import org.springframework.stereotype.Component;
-
-import javax.xml.bind.JAXBException;
-import java.io.IOException;
-import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 
 
 @Component
@@ -41,6 +44,7 @@ public class EventTransactionFinalizerProcessor implements Processor {
         this.applicazioneRepository.findAll()
                 .forEach(applicazione -> {
                     try {
+//                      verifyPendingMessages(applicazione);
                         List<EventoArcaPending> elencoMessaggiCompleti = this.eventoArcaPendingRepository.findAllByStatoIsAndIdApplicazione(2, applicazione.getId());
                         log.info("{}: messaggi completati da inviare : {}", applicazione.getAppName(), elencoMessaggiCompleti.size());
                         elencoMessaggiCompleti.forEach(messaggio -> {
@@ -51,7 +55,7 @@ public class EventTransactionFinalizerProcessor implements Processor {
                         log.info("{}: esecuzione chiamata al ws completata", applicazione.getAppName());
 
                         log.info("{}: salvataggio stato eventi come completato in corso ...", applicazione.getAppName());
-                        elencoMessaggiCompleti.forEach(x -> x.setStato(100));
+                        elencoMessaggiCompleti.forEach(x -> x.setStato(99));
                         this.eventoArcaPendingRepository.saveAll(elencoMessaggiCompleti);
                         log.info("{}: salvataggio stato eventi come completato eseguita con successo", applicazione.getAppName());
 
@@ -62,9 +66,14 @@ public class EventTransactionFinalizerProcessor implements Processor {
                     }
                     log.info("totale eventi segnati come completato: {}", inviati.get());
                 });
-
-
-
-
+    }
+    
+    private void verifyPendingMessages(Applicazione applicazione) {
+      log.info("*** ID Applicazione={}", applicazione.getId());
+      List<EventoArcaPending> elencoMessaggiCompleti = this.eventoArcaPendingRepository.findAll();
+      elencoMessaggiCompleti.forEach(messaggio -> {
+        log.info("{}-{}", messaggio.getArcaKey(), messaggio.getStato());
+      });
+      
     }
 }

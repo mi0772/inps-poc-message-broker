@@ -35,21 +35,25 @@ public class EventDetailsGetProcessor implements Processor {
 
         Map<EventoArcaPending, List<Long>> elencoEventi = (Map<EventoArcaPending, List<Long>>)exchange.getIn().getBody();
         List<Result> result = new ArrayList<Result>(1000);
-
-        elencoEventi.keySet().forEach(evento -> {
+        
+        if (elencoEventi.size() > 0) {
+          elencoEventi.keySet().forEach(evento -> {
             List<Long> applicazioni = elencoEventi.get(evento);
             EventoArcaDetailsSearchRequest request = new EventoArcaDetailsSearchRequest(evento.getArcaKey());
-
+            
             try {
-                log.info("{}: richiesta dettaglio evento arcakey = {}", applicazioni.stream().map(x -> ""+x).collect(Collectors.joining(",")), request.getArcaKey() );
-                String response = wsClient.getDetails(request);
-                evento.setXml(EventoArcaDetails.fromWSResponse(response).getXml());
-                applicazioni.forEach(app -> result.add(new Result(app, evento)));
+              log.info("Dettaglio arcakey '{}' per: {}", request.getArcaKey(), applicazioni.stream().map(x -> ""+x).collect(Collectors.joining(",")));
+              String response = wsClient.getDetails(request);
+              evento.setXml(EventoArcaDetails.fromWSResponse(response).getXml());
+              applicazioni.forEach(app -> result.add(new Result(app, evento)));
             }
             catch (JAXBException | IOException e) {
-                throw new RuntimeException();
+              throw new RuntimeException();
             }
-        });
+          });
+        } else {
+          log.info("***");
+        }
 
         exchange.getIn().setBody(result);
     }

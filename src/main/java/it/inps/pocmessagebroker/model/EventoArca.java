@@ -25,6 +25,7 @@ import static it.inps.pocmessagebroker.utils.XMLUtils.nodeToString;
 @Data
 @ToString(callSuper = false)
 public class EventoArca {
+    private String CODICEEVENTO;
     private String CFCCC1_EV0;
     private String PROGR_EV0;
     private String TIMEST1_EV0;
@@ -61,13 +62,14 @@ public class EventoArca {
             Document doc = db.parse(in);
             doc.getDocumentElement().normalize();
 
-            NodeList list = doc.getElementsByTagName("EventoArca");
+            NodeList list = doc.getElementsByTagName("EventoArcaCompleta");
 
             for (int temp = 0; temp < list.getLength(); temp++) {
                 Node node = list.item(temp);
                 if (node.getNodeType() == Node.ELEMENT_NODE) {
                     Element element = (Element) node;
                     EventoArca r = new EventoArca();
+                    r.setCODICEEVENTO   (getTagValueFromName(element, "CODICEEVENTO").orElse(""));
                     r.setCFCCC1_EV0     (getTagValueFromName(element, "CFCCC1_EV0").orElse(""));
                     r.setPROGR_EV0      (getTagValueFromName(element, "PROGR_EV0").orElse(""));
                     r.setTIMEST1_EV0    (getTagValueFromName(element, "TIMEST1_EV0").orElse(""));
