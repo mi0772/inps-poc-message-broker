@@ -8,18 +8,18 @@
         </inps:Identity>
     </soapenv:Header>
     <soapenv:Body>
-        <arc:notificaEventi>
-            <notificaEventiRequest>
+        <arc:notificaEventiCompletaRequest>
+            <notificaEventiCompletaRequest>
                 <parametriApplicazione>
                     <codiceArchivio>%s</codiceArchivio>
                     <progetto>%s</progetto>
                 </parametriApplicazione>
                 <listaEventi>
-                    <eventiArca>
+                    <eventiArcaCompleta>
                         %s
-                    </eventiArca>
+                    </eventiArcaCompleta>
                 </listaEventi>
-            </notificaEventiRequest>
-        </arc:notificaEventi>
+            </notificaEventiCompletaRequest>
+        </arc:notificaEventiCompletaRequest>
     </soapenv:Body>
 </soapenv:Envelope>

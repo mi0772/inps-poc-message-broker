@@ -48,8 +48,8 @@ public class EventTransactionFinalizerProcessor implements Processor {
                         List<EventoArcaPending> elencoMessaggiCompleti = this.eventoArcaPendingRepository.findAllByStatoIsAndIdApplicazione(2, applicazione.getId());
                         log.info("{}: messaggi completati da inviare : {}", applicazione.getAppName(), elencoMessaggiCompleti.size());
                         elencoMessaggiCompleti.forEach(messaggio -> {
-                            //messaggio.setXml(messaggio.getXml().replace("<RETURNCODE/>","<RETURNCODE>OK</RETURNCODE>"));
-                            messaggio.setXml(messaggio.getXMLforFinalizeRequest().replace("<RETURNCODE/>","<RETURNCODE>OK</RETURNCODE>"));
+                            messaggio.setXml(messaggio.getXml().replace("<RETURNCODE/>","<RETURNCODE>OK</RETURNCODE>"));
+                            //messaggio.setXml(messaggio.getXMLforFinalizeRequest().replace("<RETURNCODE/>","<RETURNCODE>OK</RETURNCODE>"));
                         });
                         log.info("{}: esecuzione chiamata al ws in corso ...", applicazione.getAppName());
                         this.arcaNotificaEventiWSClient.finalizeEvento(this.config.getWsEndpoint(), elencoMessaggiCompleti, applicazione);
