@@ -51,4 +51,26 @@ public class EventoArcaPending {
                 ", dataEvento=" + codiceEvento +
                 '}';
     }
+
+    public String getXMLforFinalizeRequest() {
+        return removeParts(this.getXml(), "CODICEEVENTO", "ARCHIVIO_SUB", "PROGETTO_SUB");
+    }
+
+    private static String removePart(String s, String tag) {
+        int start = s.indexOf("<"+tag+">");
+        if (start < 0)
+            return s;
+        int end = s.indexOf("</"+tag+">") + tag.length() + 3;
+        return s.substring(0, start) + s.substring(end);
+    }
+
+    private static String removeParts(String s, String... tags) {
+        StringBuilder r = new StringBuilder(s);
+        for (String tag : tags) {
+            String temp = removePart(r.toString(), tag);
+            r.delete(0,  r.length());
+            r.append(temp);
+        }
+        return r.toString().replace("EventoArcaCompleta", "EventoArca");
+    }
 }
