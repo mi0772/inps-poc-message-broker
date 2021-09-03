@@ -10,10 +10,10 @@ ws:
   arcaintra:
     #appKey: AB02697
     #appName: AB02697
-    appKey: AB02697
-    appName: AB02697
-    userId: BATCH
-    identityProvider: BATCH
+    appKey: WA00405
+    appName: WA00405
+    userId: WA00405
+    identityProvider: AD
     profilo: 6
     tipoChiave: 01
 
@@ -40,14 +40,29 @@ spring:
     user: admin
     password: admin
   datasource:
-    url: jdbc:mysql://localhost:3306/db
-    driverClassName: com.mysql.jdbc.Driver
-    username: user
-    password: password
+#    url: jdbc:mysql://localhost:3306/db
+#    driverClassName: com.mysql.jdbc.Driver
+#    username: user
+#    password: password
+    url: jdbc:sqlserver://;serverName=SQLINPSSVIL83.ser-test.inps;databaseName=DS05126_MB_BATCH_ARCA
+    driverClassName: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    username: DBDS0512600
+    password: SSaapp300
   jpa:
-    database-platform: org.hibernate.dialect.MySQLDialect
+#    database-platform: org.hibernate.dialect.MySQLDialect
+    database-platform: org.hibernate.dialect.SQLServer2012Dialect
     show-sql: false
+#    properties:
+#      hibernate:
+#        format_sql: true
+#        dialect: org.hibernate.dialect.SQLServer2012Dialect
 
 logging:
   level:
     org.springframework.web: INFO
+#    org.hibernate:
+#      SQL: DEBUG
+#      type.descriptor.sql.BasicBinder: TRACE
+#    org.springframework.jdbc.core:
+#      JdbcTemplate: DEBUG
+#      StatementCreatorUtils: TRACE
