@@ -1,7 +1,9 @@
 package it.inps.pocmessagebroker.wsclients.impl;
 
+import it.inps.pocmessagebroker.domain.ApplicationConfig;
 import it.inps.pocmessagebroker.domain.Applicazione;
 import it.inps.pocmessagebroker.model.EventoArca;
+import it.inps.pocmessagebroker.repository.ApplicationConfigRepository;
 import it.inps.pocmessagebroker.utils.ReadResource;
 import it.inps.pocmessagebroker.domain.EventoArcaPending;
 import it.inps.pocmessagebroker.wsclients.ArcaNotificaEventiWSClient;
@@ -11,13 +13,10 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
-import org.springframework.util.ResourceUtils;
 import org.springframework.web.client.RestTemplate;
 
 import javax.xml.bind.JAXBException;
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.util.List;
 
 @Component
@@ -29,15 +28,18 @@ public class ArcaNotificaEventiWSClientImpl implements ArcaNotificaEventiWSClien
   ReadResource readResource;
   
     private final RestTemplate restTemplate;
-
+    private final ApplicationConfigRepository applicationConfigRepository;
 
     @Autowired
-    public ArcaNotificaEventiWSClientImpl(RestTemplate restTemplate) {
+    public ArcaNotificaEventiWSClientImpl(RestTemplate restTemplate, ApplicationConfigRepository applicationConfigRepository) {
         this.restTemplate = restTemplate;
+        this.applicationConfigRepository = applicationConfigRepository;
     }
 
     public List<EventoArca> getEventi(String webServiceEndpoint, Applicazione applicazione) {
         try {
+            ApplicationConfig applicationConfig = this.applicationConfigRepository.findAll().stream().findAny().orElseThrow(RuntimeException::new);
+
             HttpHeaders headers = new HttpHeaders();
             headers.add("Content-Type", "text/xml");
             String requestString = readResource.getResourceAsString("notifica_eventi_soap_request.xml");
@@ -45,10 +47,10 @@ public class ArcaNotificaEventiWSClientImpl implements ArcaNotificaEventiWSClien
 //            String requestString = new String(Files.readAllBytes(file.toPath()));
             HttpEntity<String> request = new HttpEntity<>(String.format(
                     requestString,
-                    applicazione.getAppName(),
-                    applicazione.getAppKey(),
-                    applicazione.getUserId(),
-                    applicazione.getIdentityProvvider(),
+                    applicationConfig.getAppName(),
+                    applicationConfig.getAppKey(),
+                    applicationConfig.getUserId(),
+                    applicationConfig.getIdentityProvider(),
                     applicazione.getCodiceArchivio(),
                     applicazione.getProgetto()), headers);
 
@@ -71,6 +73,9 @@ public class ArcaNotificaEventiWSClientImpl implements ArcaNotificaEventiWSClien
     @Override
     public Boolean finalizeEvento(String webServiceEndpoint, List<EventoArcaPending> eventoArca, Applicazione applicazione) throws IOException, JAXBException {
         try {
+            ApplicationConfig applicationConfig = this.applicationConfigRepository.findAll().stream().findAny().orElseThrow(RuntimeException::new);
+
+
             HttpHeaders headers = new HttpHeaders();
             headers.add("Content-Type", "text/xml");
             String requestString = readResource.getResourceAsString("finalize_eventi_soap_request.xml");
@@ -84,10 +89,10 @@ public class ArcaNotificaEventiWSClientImpl implements ArcaNotificaEventiWSClien
 
             HttpEntity<String> request = new HttpEntity<>(String.format(
                     requestString,
-                    applicazione.getAppName(),
-                    applicazione.getAppKey(),
-                    applicazione.getUserId(),
-                    applicazione.getIdentityProvvider(),
+                    applicationConfig.getAppName(),
+                    applicationConfig.getAppKey(),
+                    applicationConfig.getUserId(),
+                    applicationConfig.getIdentityProvider(),
                     applicazione.getCodiceArchivio(),
                     applicazione.getProgetto(),
                     sb.toString()

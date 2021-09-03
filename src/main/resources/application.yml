@@ -6,17 +6,6 @@ routes:
   event-finalizer:
     wsEndpoint: https://ws.svil.inps/host/ArcaNotificaEventiWS
 
-ws:
-  arcaintra:
-    #appKey: AB02697
-    #appName: AB02697
-    appKey: AB02697
-    appName: AB02697
-    userId: BATCH
-    identityProvider: BATCH
-    profilo: 6
-    tipoChiave: 01
-
 camel:
   springboot:
     main-run-controller: false
@@ -26,7 +15,6 @@ camel:
 
 server:
   port: 8080
-
 
 spring:
   jmx:

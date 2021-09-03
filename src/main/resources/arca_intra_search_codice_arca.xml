@@ -10,21 +10,21 @@
     <soapenv:Body>
         <arca:DiacRicercaConCodiceArcaRequest>
             <arca:Sicurezza>
-                <arca:CodiceTipoOperatore>U</arca:CodiceTipoOperatore>
-                <arca:Provenienza>PC</arca:Provenienza>
-                <arca:CodiceFiscaleOperatore/>
-                <arca:MatricolaINPS>AB02697</arca:MatricolaINPS>
-                <arca:SedeRichiesta>003900</arca:SedeRichiesta>
-                <arca:GestioneApplOrigine>999</arca:GestioneApplOrigine>
-                <arca:SedeApplOrigine>003900</arca:SedeApplOrigine>
-                <arca:PgmApplOrigine>AB02697</arca:PgmApplOrigine>
-                <arca:TranApplOrigine>WSINTRA</arca:TranApplOrigine>
-                <arca:Funzione>RO</arca:Funzione>
-                <arca:WsReserved>WEB</arca:WsReserved>
+                <arca:CodiceTipoOperatore>#CODICE_TIPO_OPERATORE</arca:CodiceTipoOperatore>
+                <arca:Provenienza>#PROVENIENZA</arca:Provenienza>
+                <arca:CodiceFiscaleOperatore>#CF</arca:CodiceFiscaleOperatore>
+                <arca:MatricolaINPS>#MINPS</arca:MatricolaINPS>
+                <arca:SedeRichiesta>#SRIC</arca:SedeRichiesta>
+                <arca:GestioneApplOrigine>#GAPPL</arca:GestioneApplOrigine>
+                <arca:SedeApplOrigine>#SAPPL</arca:SedeApplOrigine>
+                <arca:PgmApplOrigine>#PGMAPPL</arca:PgmApplOrigine>
+                <arca:TranApplOrigine>#WSINTRA</arca:TranApplOrigine>
+                <arca:Funzione>#FUNZ</arca:Funzione>
+                <arca:WsReserved>#WSRESERVED</arca:WsReserved>
             </arca:Sicurezza>
             <arca:Ricerca>
-                <arca:Profilo>6</arca:Profilo>
-                <arca:TipoChiavePresente>01</arca:TipoChiavePresente>
+                <arca:Profilo>#PROFILO</arca:Profilo>
+                <arca:TipoChiavePresente>#TIPO_CHIAVE</arca:TipoChiavePresente>
                 <arca:ChiaveARCA>%s</arca:ChiaveARCA>
             </arca:Ricerca>
         </arca:DiacRicercaConCodiceArcaRequest>
