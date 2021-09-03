@@ -47,7 +47,6 @@ public class EventDiscoveryRoute extends RouteBuilder {
                 appContext.close();
                 log.info("*** Process shutdown complete.");
             }
-
         }).end()
                 .process(this.discoveryProcessor)
                 .process(this.eventDiscoverySaveResultProcessor)
