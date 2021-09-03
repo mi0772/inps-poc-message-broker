@@ -35,7 +35,7 @@ public class EventDetailsRoute extends RouteBuilder {
         from("direct:event_details")
                 .process(eventDetailsOptimizeResultProcessor)
                 .process(eventDetailsGetProcessor)
-                .to("direct:event_finalize")
+                //.to("direct:event_finalize")
                 .split(body())
                 .process(this.eventDetailsSetDestQueueProcessor)
                 .recipientList(header("applicationQueue"))

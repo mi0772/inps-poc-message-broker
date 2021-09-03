@@ -17,11 +17,11 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class EventDiscoveryRoute extends RouteBuilder {
 
-  @Autowired
-  private ConfigurableApplicationContext appContext;
+    @Autowired
+    private ConfigurableApplicationContext appContext;
 
 //  private CamelContext camelContext;
-  
+
     private final EventDiscoveryProcessor discoveryProcessor;
     private final EventDiscoverySaveResultProcessor eventDiscoverySaveResultProcessor;
 
@@ -35,19 +35,21 @@ public class EventDiscoveryRoute extends RouteBuilder {
 
     @Override
     public void configure() throws Exception {
-        from("timer://manualRestart?repeatCount=1").onCompletion().process(new Processor() {
-            @Override
-            public void process(Exchange exchange) throws Exception {
-                log.info("elaborazione terminata");
-                CamelContext camelContext = exchange.getContext();
-                log.info("*** Camel ShutdownStrategy timeout = {} seconds", camelContext.getShutdownStrategy().getTimeout());
-                camelContext.getShutdownStrategy().setShutdownRoutesInReverseOrder(true);
-                camelContext.stop();
-                log.info("*** Start process shutdown...");
-                appContext.close();
-                log.info("*** Process shutdown complete.");
-            }
-        }).end()
+        from("timer://manualRestart?repeatCount=1").onCompletion()
+                .to("direct:event_finalize")
+                .process(new Processor() {
+                    @Override
+                    public void process(Exchange exchange) throws Exception {
+                        log.info("elaborazione terminata");
+                        CamelContext camelContext = exchange.getContext();
+                        log.info("*** Camel ShutdownStrategy timeout = {} seconds", camelContext.getShutdownStrategy().getTimeout());
+                        camelContext.getShutdownStrategy().setShutdownRoutesInReverseOrder(true);
+                        camelContext.stop();
+                        log.info("*** Start process shutdown...");
+                        appContext.close();
+                        log.info("*** Process shutdown complete.");
+                    }
+                }).end()
                 .process(this.discoveryProcessor)
                 .process(this.eventDiscoverySaveResultProcessor)
                 .to("direct:event_details")
