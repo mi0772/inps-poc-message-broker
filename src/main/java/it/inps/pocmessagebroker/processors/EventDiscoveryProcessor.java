@@ -2,8 +2,10 @@ package it.inps.pocmessagebroker.processors;
 
 import it.inps.pocmessagebroker.config.EventDiscoveryRouteConfig;
 
+import it.inps.pocmessagebroker.domain.ApplicationConfig;
 import it.inps.pocmessagebroker.domain.Applicazione;
 import it.inps.pocmessagebroker.model.EventoArca;
+import it.inps.pocmessagebroker.repository.ApplicationConfigRepository;
 import it.inps.pocmessagebroker.repository.ApplicazioneRepository;
 import it.inps.pocmessagebroker.wsclients.ArcaNotificaEventiWSClient;
 import lombok.extern.slf4j.Slf4j;
@@ -40,10 +42,10 @@ public class EventDiscoveryProcessor implements Processor {
 
         this.applicazioneRepository.findAll()
                 .forEach(applicazione -> {
-                    log.info("{}-{}_{}: interrogazione WS in corso ...", applicazione.getAppName(), applicazione.getCodiceArchivio(), applicazione.getProgetto());
+                    log.info("{}_{}: interrogazione WS in corso ...",  applicazione.getCodiceArchivio(), applicazione.getProgetto());
                     List<EventoArca> nuoviEventi = this.arcaNotificaEventiWSClient.getEventi(this.config.getWsEndpoint(), applicazione);
                     result.put(applicazione, nuoviEventi);
-                    log.info("{}-{}_{}: il servizio ha restituito nr: {} eventi", applicazione.getAppName(), applicazione.getCodiceArchivio(), applicazione.getProgetto(), nuoviEventi.size());
+                    log.info("{}_{}: il servizio ha restituito nr: {} eventi", applicazione.getCodiceArchivio(), applicazione.getProgetto(), nuoviEventi.size());
                 });
 
 

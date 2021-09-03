@@ -41,7 +41,7 @@ public class EventDiscoverySaveResultProcessor implements Processor {
                 .forEach(applicazione -> {
                     AtomicInteger tSalvati = new AtomicInteger();
                     AtomicInteger tScartati = new AtomicInteger();
-                    log.info("{}-{}_{}: controllo eventi ricevuti", applicazione.getAppName(), applicazione.getCodiceArchivio(), applicazione.getProgetto());
+                    log.info("{}_{}: controllo eventi ricevuti",  applicazione.getCodiceArchivio(), applicazione.getProgetto());
                     List<EventoArca> eventi = eventiArca.get(applicazione);
                     eventi.forEach(eventoArca -> {
 
@@ -64,8 +64,8 @@ public class EventDiscoverySaveResultProcessor implements Processor {
                         }
                     });
 
-                    log.info("{}-{}_{}: {} nuovi eventi registrati", applicazione.getAppName(), applicazione.getCodiceArchivio(), applicazione.getProgetto(), tSalvati.get());
-                    log.info("{}-{}_{}: {} nuovi eventi ignorati (registrati in precedenza)", applicazione.getAppName(), applicazione.getCodiceArchivio(), applicazione.getProgetto(), tScartati.get());
+                    log.info("{}_{}: {} nuovi eventi registrati",  applicazione.getCodiceArchivio(), applicazione.getProgetto(), tSalvati.get());
+                    log.info("{}_{}: {} nuovi eventi ignorati (registrati in precedenza)",  applicazione.getCodiceArchivio(), applicazione.getProgetto(), tScartati.get());
                 });
 
         log.info("totale nuovi eventi registrati = {}",salvati.get());

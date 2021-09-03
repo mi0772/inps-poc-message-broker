@@ -46,19 +46,18 @@ public class EventTransactionFinalizerProcessor implements Processor {
                     try {
 //                      verifyPendingMessages(applicazione);
                         List<EventoArcaPending> elencoMessaggiCompleti = this.eventoArcaPendingRepository.findAllByStatoIsAndIdApplicazione(2, applicazione.getId());
-                        log.info("{}: messaggi completati da inviare : {}", applicazione.getAppName(), elencoMessaggiCompleti.size());
+                        log.info("messaggi completati da inviare : {}",  elencoMessaggiCompleti.size());
                         elencoMessaggiCompleti.forEach(messaggio -> {
                             messaggio.setXml(messaggio.getXml().replace("<RETURNCODE/>","<RETURNCODE>OK</RETURNCODE>"));
                             //messaggio.setXml(messaggio.getXMLforFinalizeRequest().replace("<RETURNCODE/>","<RETURNCODE>OK</RETURNCODE>"));
                         });
-                        log.info("{}: esecuzione chiamata al ws in corso ...", applicazione.getAppName());
                         this.arcaNotificaEventiWSClient.finalizeEvento(this.config.getWsEndpoint(), elencoMessaggiCompleti, applicazione);
-                        log.info("{}: esecuzione chiamata al ws completata", applicazione.getAppName());
+                        log.info("esecuzione chiamata al ws completata");
 
-                        log.info("{}: salvataggio stato eventi come completato in corso ...", applicazione.getAppName());
+                        log.info("salvataggio stato eventi come completato in corso ...");
                         elencoMessaggiCompleti.forEach(x -> x.setStato(99));
                         this.eventoArcaPendingRepository.saveAll(elencoMessaggiCompleti);
-                        log.info("{}: salvataggio stato eventi come completato eseguita con successo", applicazione.getAppName());
+                        log.info("salvataggio stato eventi come completato eseguita con successo");
 
                         inviati.addAndGet(elencoMessaggiCompleti.size());
 

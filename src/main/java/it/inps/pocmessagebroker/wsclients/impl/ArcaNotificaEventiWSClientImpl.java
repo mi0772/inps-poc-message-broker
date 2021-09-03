@@ -54,7 +54,7 @@ public class ArcaNotificaEventiWSClientImpl implements ArcaNotificaEventiWSClien
                     applicazione.getCodiceArchivio(),
                     applicazione.getProgetto()), headers);
 
-            log.info("*** Recupera eventi per '{}'-{}_{}", applicazione.getAppName(), applicazione.getCodiceArchivio(), applicazione.getProgetto());
+            log.info("*** Recupera eventi per '{}'-{}_{}", applicationConfig.getAppName(), applicazione.getCodiceArchivio(), applicazione.getProgetto());
             log.debug("*** XML di richiesta:\n{}", request.toString());
             String result = restTemplate.postForObject(webServiceEndpoint, request, String.class);
             log.debug("*** XML di risposta:\n{}", result);
@@ -79,8 +79,6 @@ public class ArcaNotificaEventiWSClientImpl implements ArcaNotificaEventiWSClien
             HttpHeaders headers = new HttpHeaders();
             headers.add("Content-Type", "text/xml");
             String requestString = readResource.getResourceAsString("finalize_eventi_soap_request.xml");
-//            File file = ResourceUtils.getFile("classpath:finalize_eventi_soap_request.xml");
-//            String requestString = new String(Files.readAllBytes(file.toPath()));
 
             StringBuilder sb = new StringBuilder();
             eventoArca.forEach(evento -> {
@@ -99,7 +97,7 @@ public class ArcaNotificaEventiWSClientImpl implements ArcaNotificaEventiWSClien
             ), headers);
 
 
-            log.info("*** Conferma eventi per '{}'-{}_{}", applicazione.getAppName(), applicazione.getCodiceArchivio(), applicazione.getProgetto());
+            log.info("*** Conferma eventi per '{}'-{}_{}", applicationConfig.getAppName(), applicazione.getCodiceArchivio(), applicazione.getProgetto());
 
             String result = restTemplate.postForObject(webServiceEndpoint, request, String.class);
             if (!result.contains("<SOAP-ENV:Fault>")) {

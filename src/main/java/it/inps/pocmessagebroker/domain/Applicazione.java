@@ -14,6 +14,7 @@ public class Applicazione implements Serializable {
     @Id @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
 
+    /*
     @Column(name = "app_name")
     private String appName;
 
@@ -25,7 +26,7 @@ public class Applicazione implements Serializable {
 
     @Column(name = "identity_provider")
     private String identityProvvider;
-
+*/
     @Column(name = "codice_archivio")
     private String codiceArchivio;
 
