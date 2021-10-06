@@ -36,6 +36,7 @@ public class EventDiscoverySaveResultProcessor implements Processor {
 
         AtomicInteger salvati = new AtomicInteger(0);
         AtomicInteger scartati = new AtomicInteger(0);
+        Timestamp timeStamp = new Timestamp(new Date().getTime());
 
         eventiArca.keySet()
                 .forEach(applicazione -> {
@@ -52,7 +53,7 @@ public class EventDiscoverySaveResultProcessor implements Processor {
                             eventoArcaPending.setArcaKey(eventoArca.getChiaveArca());
                             eventoArcaPending.setXml(eventoArca.getXml());
                             eventoArcaPending.setStato(0);
-                            eventoArcaPending.setDataEvento(new Timestamp(new Date().getTime()));
+                            eventoArcaPending.setDataEvento(timeStamp);
                             eventoArcaPending.setCodiceEvento(eventoArca.getCODICEEVENTO());
                             this.eventoArcaPendingRepository.save(eventoArcaPending);
                             salvati.incrementAndGet();
