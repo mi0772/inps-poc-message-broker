@@ -37,16 +37,22 @@ public class EventDiscoverySaveResultProcessor implements Processor {
         AtomicInteger salvati = new AtomicInteger(0);
         AtomicInteger scartati = new AtomicInteger(0);
 
-        eventiArca.keySet()
-                .forEach(applicazione -> {
+        eventiArca.keySet().forEach(applicazione -> {
                     AtomicInteger tSalvati = new AtomicInteger();
                     AtomicInteger tScartati = new AtomicInteger();
                     log.info("{}_{}: controllo eventi ricevuti",  applicazione.getCodiceArchivio(), applicazione.getProgetto());
                     List<EventoArca> eventi = eventiArca.get(applicazione);
                     eventi.forEach(eventoArca -> {
 
-                        //if (!this.eventoArcaPendingRepository.findTopByArcaKeyAndIdApplicazione(eventoArca.getChiaveArca(), applicazione.getId()).isPresent()) {
-                        if (!this.eventoArcaPendingRepository.findTopByArcaKeyAndIdApplicazioneAndCodiceEvento(eventoArca.getChiaveArca(), applicazione.getId(), eventoArca.getCODICEEVENTO()).isPresent()) {
+                        List<EventoArcaPending> liveEvents = this.eventoArcaPendingRepository.findAllByArcaKeyAndIdApplicazione(eventoArca.getChiaveArca(), applicazione.getId());
+                        if (liveEvents.stream().anyMatch(x -> x.getCodiceEvento().contains(eventoArca.getCODICEEVENTO()))) {
+                            log.info("l'evento {} è già presente lo ignoro", eventoArca.getChiaveArca());
+                            scartati.incrementAndGet();
+                            tScartati.getAndIncrement();;
+                        }
+
+                        if (liveEvents == null || liveEvents.isEmpty()) {
+                            log.info("registro il nuovo evento : {}", eventoArca.getChiaveArca());
                             EventoArcaPending eventoArcaPending = new EventoArcaPending();
                             eventoArcaPending.setIdApplicazione(applicazione.getId());
                             eventoArcaPending.setArcaKey(eventoArca.getChiaveArca());
@@ -57,10 +63,15 @@ public class EventDiscoverySaveResultProcessor implements Processor {
                             this.eventoArcaPendingRepository.save(eventoArcaPending);
                             salvati.incrementAndGet();
                             tSalvati.getAndIncrement();
+
                         }
                         else {
-                            scartati.incrementAndGet();
-                            tScartati.getAndIncrement();
+                            log.info("aggiorno la riga event_pendings per nuovo codice evento");
+                            EventoArcaPending eventoArcaPending = liveEvents.stream().findAny().orElseThrow(RuntimeException::new);
+                            eventoArcaPending.setCodiceEvento(eventoArcaPending.getCodiceEvento() + ";" + eventoArca.getCODICEEVENTO());
+                            this.eventoArcaPendingRepository.save(eventoArcaPending);
+                            salvati.incrementAndGet();
+                            tSalvati.getAndIncrement();
                         }
                     });
 
